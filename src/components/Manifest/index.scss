@@ -1,0 +1,59 @@
+.manifest-controls {
+	padding: 1em 0;
+	color: #666;
+
+	.pager {
+		text-align: right;
+		display: inline-block;
+		float: right;
+		margin: 0;
+	}
+
+	.row-limit {
+		display: inline-block;
+		width: 175px;
+	}
+
+	.total-records {
+		display: inline-block;
+		margin-left: 20px;
+	}
+}
+
+
+.manifest {
+	width: 100%;
+
+	thead {
+		border-bottom: solid 2px #eee;
+		th {
+			font-weight: bolder;
+			padding: 5px;
+		}
+		th.sortable {
+			cursor: pointer;
+		}
+	}
+
+	tbody {
+		tr {
+			border-bottom: solid 1px #eee;
+
+			&.clickable {
+				cursor: pointer;
+				&:hover {
+					background-color: #f5f5f5;
+				}
+
+			}
+			td {
+				padding: 8px;
+
+				.value, .sub-value {
+					line-height: 20px;
+					vertical-align:middle;
+				}
+			}
+		}
+	}
+}
