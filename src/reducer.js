@@ -22,7 +22,8 @@ const coalesce = (a, b) => {
 const reduceRefreshData = (state, action) => ({
   ...state,
   loadingCount: true,
-  loadingData: true
+  loadingData: true,
+  filter: {...state.filter, ...action.filter}
 })
 
 const reduceSetCount = (state, action) => ({

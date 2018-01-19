@@ -3,81 +3,86 @@ import PropTypes from 'prop-types'
 
 import './index.scss'
 
-const handlePageChange = (page, handlePageChangeProp) => {
-  return handlePageChangeProp(page)
+const PagerButton = ({page, currentPage, changePage, children, className}) => {
+  let buttonStyle = 'btn pager-button'
+  if (className) buttonStyle += ' ' + className
+  buttonStyle += currentPage === page ? ' btn-primary' : 'btn-default'
+  return (
+    <button data-page={page} className={buttonStyle} onClick={changePage}>
+      {children}
+    </button>
+  )
 }
 
 const FirstButton = ({currentPage, changePage}) => {
   if (currentPage < 2) return null
   return (
-    <div data-page={0} className='btn btn-default pager-button first' onClick={changePage}>
+    <PagerButton className={'first'} page={0} currentPage={currentPage} changePage={changePage}>
       {'First'}
-    </div>
+    </PagerButton>
   )
 }
 
 const PreviousButton = ({currentPage, changePage}) => {
   if (currentPage === 0) return null
   return (
-    <div data-page={currentPage - 1} className='btn btn-default pager-button previous' onClick={changePage}>
+    <PagerButton className={'previous'} page={currentPage - 1} currentPage={currentPage} changePage={changePage}>
       {'Previous'}
-    </div>
+    </PagerButton>
   )
 }
 
 const NextButton = ({currentPage, totalPages, changePage}) => {
   if (currentPage === totalPages - 1) return null
   return (
-    <div data-page={currentPage + 1} className='btn btn-default pager-button next' onClick={changePage}>
+    <PagerButton className={'next'} page={currentPage + 1} currentPage={currentPage} changePage={changePage}>
       {'Next'}
-    </div>
+    </PagerButton>
   )
 }
 
 const LastButton = ({currentPage, totalPages, changePage}) => {
   if (currentPage === totalPages - 1) return null
   return (
-    <div data-page={totalPages - 1} className='btn btn-default pager-button last' onClick={changePage}>
+    <PagerButton className={'last'} page={totalPages - 1} currentPage={currentPage} changePage={changePage}>
       {'Last'}
-    </div>
+    </PagerButton>
   )
 }
 
 // TODO handle remainder correctly
-const determineTotalPages = (pageSize, count) => count / pageSize
+const determineTotalPages = (pageSize, count) => Math.round(count / pageSize)
 
-const determinePages = (currentPage, count) => {
+const determinePages = (currentPage, totalPages) => {
   const pages = []
-  const totalPages = determineTotalPages(currentPage, count)
   for (let i = currentPage - 2; i <= currentPage + 2; i++) {
     if (i > 0 && i <= totalPages) pages.push(i - 1)
   }
-
+  console.log('determinePages', currentPage, totalPages, pages)
   return pages
 }
 
-const PageButton = ({page, currentPage, changePage}) => (
-  <div data-page={page} className='btn pager-button btn btn-default' onClick={changePage}>
-    {page + 1}
-  </div>
-)
+const Pager = ({changePage, filter = {}, count}) => {
+  if (count === undefined || count === null) {
+    return 'loading ...'
+  }
 
-const Pager = ({changePage, filter, count}) => {
-  const handlePageChange = (a, b) => console.log('handlePageChange', a, b)
+  const currentPage = filter.page
+  const totalPages = determineTotalPages(filter.pageSize, count)
 
-  const totalPages = 300
-
-  const currentPage = 30
+  console.log('Pager Render: ', currentPage, totalPages)
 
   return (
     <div className='manifest-pager'>
       <FirstButton changePage={changePage} currentPage={currentPage} />
       <PreviousButton changePage={changePage} currentPage={currentPage} />
-      {determinePages(currentPage, count).map((page, index) => (
-        <PageButton key={index} page={page} currentPage={currentPage} changePage={changePage} />
+      {determinePages(currentPage, totalPages).map((page, index) => (
+        <PagerButton key={index} page={page} currentPage={currentPage} changePage={changePage}>
+          {page + 1}
+        </PagerButton>
       ))}
       <NextButton changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
-      <LastButton changePage={changePage} currentPage={currentPage} totalPages={totalPages} />      
+      <LastButton changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
     </div>
   )
 }
@@ -86,7 +91,7 @@ Pager.propTypes = {
   name: PropTypes.string.isRequired,
   changePage: PropTypes.func.isRequired,
   filter: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired
+  count: PropTypes.number
 }
 
 export default Pager
