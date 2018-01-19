@@ -7,7 +7,7 @@ import reactDom from 'react-dom'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
-import { put, takeEvery } from 'redux-saga/effects'
+import { put, takeLatest } from 'redux-saga/effects'
 
 import manifestReducer from 'redux-manifest/reducer'
 import * as actions from 'redux-manifest/actions'
@@ -43,7 +43,7 @@ function * sagaService (action) {
 }
 
 function * sagaRefresh () {
-  yield takeEvery(types.REFRESH_DATA, sagaService)
+  yield takeLatest(types.REFRESH_DATA, sagaService)
 }
 
 sagaMiddleware.run(sagaRefresh)

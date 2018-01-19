@@ -1,18 +1,15 @@
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Rows from '../components/Rows'
+import stateByName from '../util/stateByName'
 
-const STORE_KEY = 'manifest'
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    data: namedState.data
+  }
+}
 
-const stateByName = (state, name) => state[STORE_KEY][name] || {}
-
-const mapStateToProps = (state, props) => ({
-  data: stateByName(state, props.name).data
-})
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-
-}, dispatch)
+const mapDispatchToProps = dispatch => ({})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rows)

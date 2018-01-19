@@ -1,0 +1,23 @@
+.manifest-controls {
+  padding: 1em 0;
+  width: 100%;
+  text-align: center;
+
+  .manifest-pager {
+    display: block;
+    text-align: right;
+    float: right;
+    margin: 0;
+  }
+
+  .row-limit {
+    display: block;
+    float: left;
+    width: 15em;
+  }
+
+  .total-records {
+    display: inline-block;
+    margin-left: 20px;
+  }
+}

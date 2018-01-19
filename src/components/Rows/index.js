@@ -24,8 +24,6 @@ const Rows = ({definition, data}) => {
   // if (!data || data.length === 0) {
   //   return renderNoRecordsRow(def.columns.length)
   // }
-  console.log('render rows', data)
-
   return (
     <tbody>
       {data.map(row => <Row key={row.id} definition={definition} data={row} />)}

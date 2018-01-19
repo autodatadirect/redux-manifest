@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types'
+import SimpleHeader from '../SimpleHeader'
 import './index.scss'
 
-const mapHeader = def => (
-  <th key={def.key} data-key={def.key}>{
-    def.label || def.key}
-  </th>
-)
+const mapHeader = def => <SimpleHeader key={def.key} label={def.label || def.key} />
 
 const Headers = ({definition}) => {
   return (

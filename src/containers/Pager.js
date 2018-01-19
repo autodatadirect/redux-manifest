@@ -4,21 +4,20 @@ import { compose, withHandlers } from 'recompose'
 
 import Pager from '../components/Pager'
 import * as actions from '../actions'
+import stateByName from '../util/stateByName'
 
-const STORE_KEY = 'manifest'
-
-const stateByName = (state, name) => state[STORE_KEY][name] || {}
-
-const mapStateToProps = (state, props) => ({
-  filter: stateByName(state, props.name).filter,
-  count: stateByName(state, props.name).count
-})
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    filter: namedState.filter,
+    count: namedState.count,
+    loading: namedState.loadingCount || namedState.loadingData
+  }
+}
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   refreshData: actions.refreshData
 }, dispatch)
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Pager)
 
 const handlers = {
   changePage: props => event => {

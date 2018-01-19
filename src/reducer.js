@@ -1,7 +1,7 @@
 import * as types from './constants/actionTypes'
 
-const initialState = {
-  count: null,
+export const initialState = {
+  count: 0,
   data: [],
   loadingCount: false,
   loadingData: false,
@@ -29,7 +29,7 @@ const reduceRefreshData = (state, action) => ({
 const reduceSetCount = (state, action) => ({
   ...state,
   loadingCount: false,
-  count: action.count
+  count: action.count || 0
 })
 
 const reduceSetData = (state, action) => ({
@@ -37,7 +37,7 @@ const reduceSetData = (state, action) => ({
   loadingCount: state.loadingCount && !isSet(action.count),
   loadingData: false,
   data: action.data,
-  count: coalesce(action.count, state.count)
+  count: coalesce(action.count, state.count) || 0
 })
 
 const reducer = (state = initialState, action) => {

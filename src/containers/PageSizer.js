@@ -1,16 +1,15 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { compose, lifecycle } from 'recompose'
+import { compose, withHandlers } from 'recompose'
 
+import PageSizer from '../components/PageSizer'
 import * as actions from '../actions'
-import Manifest from '../components/Manifest'
 import stateByName from '../util/stateByName'
 
 const mapStateToProps = (state, props) => {
   const namedState = stateByName(state, props.name)
-  console.log('map', namedState, namedState.loadingCount || namedState.loadingData)
   return {
-    data: namedState.data,
+    filter: namedState.filter,
     loading: namedState.loadingCount || namedState.loadingData
   }
 }
@@ -19,15 +18,16 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   refreshData: actions.refreshData
 }, dispatch)
 
-const lifecycleMethods = {
-  componentWillMount () {
-    this.props.refreshData(this.props.name, {})
+const handlers = {
+  changePageSize: props => event => {
+    const pageSize = event.target.value
+    props.refreshData(props.name, {...props.filter, pageSize: pageSize})
   }
 }
 
 const enhance = compose(
   connect(mapStateToProps, mapDispatchToProps),
-  lifecycle(lifecycleMethods)
+  withHandlers(handlers)
 )
 
-export default enhance(Manifest)
+export default enhance(PageSizer)

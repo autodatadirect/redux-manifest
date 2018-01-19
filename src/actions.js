@@ -23,12 +23,22 @@ export const setCount = (manifestName, count) => {
   }
 }
 
+const toNumber = s => +s || 0
+
+const cleanFilter = filterIn => {
+  const filter = {...filterIn}
+  if (filter.count) filter.count = toNumber(filter.count)
+  if (filter.page) filter.page = toNumber(filter.page)
+  if (filter.pageSize) filter.pageSize = toNumber(filter.pageSize)
+  return filter
+}
+
 export const refreshData = (manifestName, filter) => {
   if (!manifestName) throw err('manifest name must be set')
   if (!filter) throw err('filter must be set')
   return {
     type: types.REFRESH_DATA,
     manifestName,
-    filter
+    filter: cleanFilter(filter)
   }
 }

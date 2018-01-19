@@ -17,5 +17,5 @@ const computeData = ({page = 0, pageSize = 10, sort}) => ({
 })
 
 export default filter => new Promise((resolve, reject) => {
-  window.setTimeout(() => resolve(computeData(filter)), 200)
+  window.setTimeout(() => resolve(computeData(filter)), 1)
 })
