@@ -1,0 +1,11 @@
+.sorted-asc::after {
+  content: '▲'
+}
+.sorted-desc::after {
+  content: '▼'
+}
+
+.loading.sorted-asc::after,
+.loading.sorted-desc::after {
+  color: #999;
+}

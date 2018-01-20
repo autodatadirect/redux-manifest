@@ -53,17 +53,26 @@ sagaMiddleware.run(sagaRefresh)
  */
 
 const definition = [{
-  key: 'id',
+  id: 'id',
   label: 'ID'
 }, {
-  key: 'date',
+  id: 'date',
   label: 'Date'
 }, {
-  key: 'firstName',
+  id: 'firstName',
   label: 'First Name'
 }, {
-  key: 'lastName',
+  id: 'lastName',
   label: 'Last Name'
+}, {
+  id: 'age',
+  label: 'Age'
+}, {
+  id: 'phone',
+  label: 'Phone'
+}, {
+  id: 'address',
+  label: 'Address'
 }]
 
 /*

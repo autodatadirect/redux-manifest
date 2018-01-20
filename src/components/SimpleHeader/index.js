@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
-
-/*
+import './index.scss'
 
 const buildHeaderClass = (hdr, changeManifestFilter) => {
   if (!isSortable(hdr, changeManifestFilter)) {
@@ -13,59 +12,23 @@ const isSortable = (hdr, changeManifestFilter) => {
   return !!(changeManifestFilter && hdr.sort)
 }
 
-const drawHeaderSortIcon = (hdr, sorts, changeManifestFilter) => {
-  if (!isSortable(hdr, changeManifestFilter)) {
-    return
-  }
-  if (!sorts) {
-    return
-  }
-
-  let ret
-  sorts.forEach(sort => {
-    if (sort.field === hdr.sort) {
-      if (sort.direction === 'Ascending') {
-        ret = <span key={hdr.header + '_sort'} className='sort'>▲</span>
-      } else {
-        ret = <span key={hdr.header + '_sort'} className='sort'>▼</span>
-      }
-    }
-  })
-  return ret
+const sortStyle = (id, sortAsc) => {
+  if (sortAsc === null || sortAsc === undefined) return ''
+  return sortAsc ? 'sorted-asc' : 'sorted-desc'
 }
 
-const buildHeaderClick = (hdr, filter, changeManifestFilter) => {
-  let dir = 'Descending'
-  const sortFilter = filter.sort
-
-  if (!isSortable(hdr, changeManifestFilter)) {
-    return
-  }
-
-  if (sortFilter) {
-    sortFilter.forEach(sort => {
-      if (sort.field === hdr.sort && sort.direction === 'Descending') {
-        dir = 'Ascending'
-      }
-    })
-  }
-
-  return changeManifestFilter({
-    sort: [{field: hdr.sort, direction: dir}]
-  })
-}
-
-*/
-
-const SimpleHeader = ({key, label}) => (
-  <th key={key} data-key={key}>
+const SimpleHeader = ({id, label, sortAsc, updateSort, loading}) => (
+  <th data-id={id} onClick={updateSort} className={'manifest-header ' + sortStyle(id, sortAsc) + (loading ? ' loading' : '')}>
     {label}
   </th>
 )
 
 SimpleHeader.propTypes = {
-  key: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
+  label: PropTypes.string.isRequired,
+  updateSort: PropTypes.func.isRequired,
+  sortAsc: PropTypes.bool
 }
 
 export default SimpleHeader

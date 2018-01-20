@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 
 const Row = ({definition, data}) => (
   <tr>
-    {definition.map(def => <td key={def.key}>{data[def.key]}</td>)}
+    {definition.map(def => <td key={def.id}>{data[def.id]}</td>)}
   </tr>
 )
 
@@ -21,7 +21,7 @@ Row.propTypes = {
   data: PropTypes.object.isRequired,
   definition: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       label: PropTypes.string
     }).isRequired
   )

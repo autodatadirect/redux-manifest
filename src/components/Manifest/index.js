@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import './index.scss'
 
 import Rows from '../../containers/Rows'
-import Headers from '../Headers'
+import Headers from '../../containers/Headers'
 import Controls from '../Controls'
 
 /*
@@ -14,7 +14,7 @@ const Manifest = ({name, definition, loading}) => {
   return (
     <div className={'manifest table' + (loading ? ' loading' : '')}>
       <table>
-        <Headers definition={definition} />
+        <Headers name={name} definition={definition} />
         <Rows name={name} definition={definition} />
       </table>
       <Controls name={name} />
@@ -27,7 +27,7 @@ Manifest.propTypes = {
   loading: PropTypes.bool.isRequired,
   definition: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       label: PropTypes.string
     }).isRequired
   )

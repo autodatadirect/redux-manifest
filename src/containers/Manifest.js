@@ -8,7 +8,6 @@ import stateByName from '../util/stateByName'
 
 const mapStateToProps = (state, props) => {
   const namedState = stateByName(state, props.name)
-  console.log('map', namedState, namedState.loadingCount || namedState.loadingData)
   return {
     data: namedState.data,
     loading: namedState.loadingCount || namedState.loadingData

@@ -38,7 +38,7 @@ Rows.propTypes = {
   ).isRequired,
   definition: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
       label: PropTypes.string
     }).isRequired
   )

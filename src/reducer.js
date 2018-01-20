@@ -8,7 +8,7 @@ export const initialState = {
   filter: {
     page: 0,
     pageSize: 10,
-    sort: []
+    sorts: []
   }
 }
 
