@@ -7,7 +7,24 @@ import Controls from '../Controls'
 
 /*
 TODO
-- id is required (rethink this)
+- tests
+- page remainder
+- error handling
+- clickable / non-clickable headers
+- focus / hover rows
+- scss cleanup with theme file
+- simple header style
+- custom cells
+- custom headers
+- custom filter (search)
+- cleanup / simplify example
+- client-side cached mode, with example
+- readme
+- multiple sorts
+- settings (pager sizer, status), or allow component override
+- handle independent count action
+- build with decoupled css
+- TravisCI
 */
 
 const Manifest = ({name, definition, loading}) => {
