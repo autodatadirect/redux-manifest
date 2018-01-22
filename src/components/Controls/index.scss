@@ -16,8 +16,12 @@
     width: 15em;
   }
 
-  .total-records {
+  .manifest-status {
     display: inline-block;
     margin-left: 20px;
+  }
+
+  .manifest-status.manifest-error {
+    color: #900;
   }
 }

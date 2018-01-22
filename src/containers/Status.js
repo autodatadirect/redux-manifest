@@ -1,15 +1,17 @@
 import { connect } from 'react-redux'
 import Status from '../components/Status'
 
-const STORE_KEY = 'manifest'
+import stateByName from '../util/stateByName'
 
-const stateByName = (state, name) => state[STORE_KEY][name] || {}
-
-const mapStateToProps = (state, props) => ({
-  filter: stateByName(state, props.name).filter,
-  count: stateByName(state, props.name).count,
-  loadingCount: stateByName(state, props.name).loadingCount
-})
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    filter: namedState.filter,
+    count: namedState.count,
+    loadingCount: namedState.loadingCount,
+    error: namedState.error
+  }
+}
 
 const mapDispatchToProps = dispatch => ({})
 

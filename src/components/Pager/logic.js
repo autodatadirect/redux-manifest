@@ -1,6 +1,5 @@
 
-// TODO handle remainder correctly
-export const determineTotalPages = (pageSize, count) => Math.round(count / pageSize)
+export const determineTotalPages = (pageSize, count) => Math.floor(count / pageSize) + (count % pageSize ? 1 : 0)
 
 export const determinePages = (currentPage, totalPages) => {
   const pages = []

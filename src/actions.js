@@ -3,6 +3,15 @@ import isArray from 'lodash/isArray'
 
 const err = message => new Error('Redux Manifest Action: ' + message)
 
+export const setError = (manifestName, message) => {
+  if (!manifestName) throw err('manifest name must be set')
+  return {
+    type: types.SET_ERROR,
+    manifestName,
+    message
+  }
+}
+
 export const setData = (manifestName, data, count) => {
   if (!manifestName) throw err('manifest name must be set')
   if (!isArray(data)) throw err('data must be an array')

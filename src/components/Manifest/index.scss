@@ -4,8 +4,12 @@
     width: 100%;
   }
 
-  &.loading td{
+  &.loading td {
     color: #999;
+  }
+
+  &.manifest-error td {
+    color: #a88;
   }
 
   thead {

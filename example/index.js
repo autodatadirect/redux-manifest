@@ -13,6 +13,7 @@ import manifestReducer from 'redux-manifest/reducer'
 import * as actions from 'redux-manifest/actions'
 import * as types from 'redux-manifest/constants/actionTypes'
 import Manifest from 'redux-manifest/containers/Manifest'
+import CellEpochDate from 'redux-manifest/components/CellEpochDate'
 import service from './service'
 
 /*
@@ -38,8 +39,12 @@ window.store = store
  */
 
 function * sagaService (action) {
-  const data = yield service(action.filter)
-  yield put(actions.setData(action.manifestName, data.data, data.count))
+  try {
+    const data = yield service(action.filter)
+    yield put(actions.setData(action.manifestName, data.data, data.count))
+  } catch (err) {
+    yield put(actions.setError(action.manifestName, err.message))
+  }
 }
 
 function * sagaRefresh () {
@@ -54,19 +59,25 @@ sagaMiddleware.run(sagaRefresh)
 
 const definition = [{
   id: 'id',
-  label: 'ID'
+  label: 'ID',
+  sortable: true
 }, {
   id: 'date',
-  label: 'Date'
+  label: 'Date',
+  sortable: true,
+  cellComponent: CellEpochDate
 }, {
   id: 'firstName',
-  label: 'First Name'
+  label: 'First Name',
+  sortable: true
 }, {
   id: 'lastName',
-  label: 'Last Name'
+  label: 'Last Name',
+  sortable: true
 }, {
   id: 'age',
-  label: 'Age'
+  label: 'Age',
+  sortable: true
 }, {
   id: 'phone',
   label: 'Phone'

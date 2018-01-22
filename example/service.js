@@ -64,5 +64,8 @@ const compileResult = filter => {
 }
 
 export default filter => new Promise((resolve, reject) => {
-  window.setTimeout(() => resolve(compileResult(filter)), 300 + chance.integer({min: 0, max: 1500}))
+  if (chance.integer({min: 0, max: 100}) > 98) {
+    reject(new Error('Service Failure'))
+  }
+  window.setTimeout(() => resolve(compileResult(filter)), 1 + chance.integer({min: 0, max: 1}))
 })

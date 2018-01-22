@@ -8,13 +8,9 @@ import Controls from '../Controls'
 /*
 TODO
 - tests
-- page remainder
-- error handling
-- clickable / non-clickable headers
 - focus / hover rows
+- next action with revert on error
 - scss cleanup with theme file
-- simple header style
-- custom cells
 - custom headers
 - custom filter (search)
 - cleanup / simplify example
@@ -27,9 +23,9 @@ TODO
 - TravisCI
 */
 
-const Manifest = ({name, definition, loading}) => {
+const Manifest = ({name, definition, loading, error}) => {
   return (
-    <div className={'manifest table' + (loading ? ' loading' : '')}>
+    <div className={'manifest table' + (loading ? ' loading' : '') + (error ? ' manifest-error' : '')}>
       <table>
         <Headers name={name} definition={definition} />
         <Rows name={name} definition={definition} />
@@ -42,6 +38,7 @@ const Manifest = ({name, definition, loading}) => {
 Manifest.propTypes = {
   name: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
+  error: PropTypes.string.isRequired,
   definition: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

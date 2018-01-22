@@ -10,6 +10,7 @@ const mapStateToProps = (state, props) => {
   const namedState = stateByName(state, props.name)
   return {
     data: namedState.data,
+    error: namedState.error,
     loading: namedState.loadingCount || namedState.loadingData
   }
 }

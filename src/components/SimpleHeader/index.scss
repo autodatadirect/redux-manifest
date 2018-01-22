@@ -1,11 +1,21 @@
-.sorted-asc::after {
-  content: '▲'
-}
+.sorted-asc::after,
 .sorted-desc::after {
-  content: '▼'
+  width: 0;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-left: 0.5em;
 }
 
-.loading.sorted-asc::after,
-.loading.sorted-desc::after {
-  color: #999;
+.sorted-asc::after {
+  content: '▲';
+  vertical-align: top;
+}
+
+.sorted-desc::after {
+  content: '▼';
+  vertical-align: bottom;
+}
+
+.manifest-header.loading {
+  color: #777;
 }

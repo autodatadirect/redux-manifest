@@ -13,7 +13,8 @@ const mapHeader = (sorts, updateSort, loading) => def =>
     id={def.id}
     loading={loading}
     label={def.label || def.id}
-    updateSort={loading ? () => null : updateSort}
+    sortable={def.sortable || false}
+    updateSort={(loading || !def.sortable) ? () => null : updateSort}
     sortAsc={sortIsAsc(getSort(def.id, sorts))}
   />
 
