@@ -8,6 +8,7 @@ import Controls from '../Controls'
 /*
 TODO
 - tests
+- test input props to give better errors (like def must be an array)
 - focus / hover rows
 - next action with revert on error
 - scss cleanup with theme file
