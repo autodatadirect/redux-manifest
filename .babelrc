@@ -22,14 +22,5 @@
     "transform-object-rest-spread",
     "lodash",
     "transform-runtime"
-  ],
-  "env": {
-    "test": {
-      "plugins": [
-        "transform-object-rest-spread",
-        "lodash",
-        [ "babel-plugin-webpack-alias", { "config": "./webpack.config-test.babel.js" } ]
-      ]
-    }
-  }
+  ]
 }

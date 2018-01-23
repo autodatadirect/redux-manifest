@@ -2,7 +2,7 @@
   "name": "redux-manifest",
   "version": "1.0.1",
   "description": "A paginated table implementation using Redux and React",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "repository": "https://github.com/a-type/redux-table",
   "scripts": {
     "test": "mocha -w --compilers js:babel-core/register src/**/*.test.js",
