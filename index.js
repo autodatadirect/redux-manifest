@@ -1,6 +1,13 @@
-export const Headers = require('./src/containers/Headers')
-export const Manifest = require('./src/containers/Manifest')
-export const Pager = require('./src/containers/Pager')
-export const PageSizer = require('./src/containers/PageSizer')
-export const Rows = require('./src/containers/Rows')
-export const Status = require('./src/containers/Status')
+import Headers from './src/containers/Headers'
+import Manifest from './src/containers/Manifest'
+import Pager from './src/containers/Pager'
+import PageSizer from './src/containers/PageSizer'
+import Rows from './src/containers/Rows'
+import Status from './src/containers/Status'
+
+export const Headers
+export const Manifest
+export const Pager
+export const PageSizer
+export const Rows
+export const Status
