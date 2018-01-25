@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const determineFirstOnPage = (page, pageSize) => Math.max(page * pageSize, 0)
+const determineFirstOnPage = (page, pageSize) => Math.max(page * pageSize, 1)
 
-const determineLastOnPage = (page, pageSize, count) => Math.min(determineFirstOnPage(page + 1, pageSize) - 1, count)
+const determineLastOnPage = (page, pageSize, count) => Math.min(determineFirstOnPage(page + 1, pageSize), count)
 
 const renderTotalRecordsMessage = (loadingCount, count, filter, error) => {
   if (loadingCount) return 'loading...'
