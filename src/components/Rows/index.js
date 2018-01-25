@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types'
+import Row from '../../containers/Row'
 
-const Rows = ({data, mapRow}) => {
+const mapRow = row => <Row key={row.data.id} name={row.name} definition={row.definition} data={row.data} />
+
+const Rows = ({rows}) => {
   return (
     <tbody>
-      {data.map(mapRow)}
+      {rows.map(mapRow)}
     </tbody>
   )
 }
 
 Rows.propTypes = {
-  data: PropTypes.arrayOf(
+  rows: PropTypes.arrayOf(
     PropTypes.object
-  ).isRequired,
-  mapRow: PropTypes.func.isRequired
+  ).isRequired
 }
 
 export default Rows

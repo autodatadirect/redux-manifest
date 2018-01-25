@@ -1,18 +1,20 @@
-import { compose, withHandlers } from 'recompose'
+import { connect } from 'react-redux'
 
 import Row from '../components/Row'
 
-const Cell = ({id, row}) => <td id={id}>{row[id]}</td>
+const buildArrayOfRowCellData = props => {
+  const definition = props.definition
+  const rowCells = []
+  for (let i = 0; i < definition.length; i++) {
+    rowCells.push({def: definition[i], data: props.data})
+  }
+  return rowCells
+}
 
-const handlers = {
-  mapCell: props => def => {
-    if (def.cellComponent) return <def.cellComponent key={def.id} value={props.data[def.id]} />
-    return <Cell key={def.id} id={def.id} row={props.data} />
+const mapStateToProps = (state, props) => {
+  return {
+    rowCells: buildArrayOfRowCellData(props)
   }
 }
 
-const enhance = compose(
-  withHandlers(handlers)
-)
-
-export default enhance(Row)
+export default connect(mapStateToProps)(Row)

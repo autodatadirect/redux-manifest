@@ -1,24 +1,21 @@
 import { connect } from 'react-redux'
-import { compose, withHandlers } from 'recompose'
-import Row from '../containers/Row'
 
 import Rows from '../components/Rows'
 import stateByName from '../util/stateByName'
 
+const buildArrayOfRowData = (data, props) => {
+  const rows = []
+  for (let i = 0; i < data.length; i++) {
+    rows.push({data: data[i], name: props.name, definition: props.definition})
+  }
+  return rows
+}
+
 const mapStateToProps = (state, props) => {
   const namedState = stateByName(state, props.name)
   return {
-    data: namedState.data
+    rows: buildArrayOfRowData(namedState.data, props)
   }
 }
 
-const handlers = {
-  mapRow: props => row => <Row key={row.id} name={props.name} definition={props.definition} data={row} />
-}
-
-const enhance = compose(
-  connect(mapStateToProps),
-  withHandlers(handlers)
-)
-
-export default enhance(Rows)
+export default connect(mapStateToProps)(Rows)

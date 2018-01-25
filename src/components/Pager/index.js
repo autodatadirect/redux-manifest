@@ -43,7 +43,12 @@ const LastButton = ({currentPage, loading, totalPages, changePage}) => {
   )
 }
 
-const Pager = ({changePage, filter, count, loading, mapNumberedPagerButtons}) => {
+const buildNumberPageButton = changePage => numberedPageButton =>
+  <PagerButton loading={numberedPageButton.loading} key={numberedPageButton.page} page={numberedPageButton.page} currentPage={numberedPageButton.currentPage} changePage={changePage}>
+    {numberedPageButton.page + 1}
+  </PagerButton>
+
+const Pager = ({changePage, filter, count, loading, numberedPageButtons}) => {
   const currentPage = filter.page
   const totalPages = pagerLogic.determineTotalPages(filter.pageSize, count)
 
@@ -51,7 +56,7 @@ const Pager = ({changePage, filter, count, loading, mapNumberedPagerButtons}) =>
     <div className='manifest-pager btn-group' role='group' aria-label='pager'>
       <FirstButton loading={loading} changePage={changePage} currentPage={currentPage} />
       <PreviousButton loading={loading} changePage={changePage} currentPage={currentPage} />
-      {pagerLogic.determinePages(currentPage, totalPages).map(mapNumberedPagerButtons)}
+      {numberedPageButtons.map(buildNumberPageButton(changePage))}
       <NextButton loading={loading} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
       <LastButton loading={loading} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
     </div>
@@ -64,7 +69,7 @@ Pager.propTypes = {
   changePage: PropTypes.func.isRequired,
   filter: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,
-  mapNumberedPagerButtons: PropTypes.func.isRequired
+  numberedPageButtons: PropTypes.array.isRequired
 }
 
 export default Pager
