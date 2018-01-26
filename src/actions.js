@@ -12,7 +12,7 @@ export const setError = (manifestName, message) => {
   }
 }
 
-export const setData = (manifestName, data, count) => {
+export const setPage = (manifestName, data, count) => {
   if (!manifestName) throw err('manifest name must be set')
   if (!isArray(data)) throw err('data must be an array')
   return {

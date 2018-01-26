@@ -1,47 +1,20 @@
 import PropTypes from 'prop-types'
-import Row from '../Row'
+import Row from '../../containers/Row'
 
-// const renderLoadingRow = length => {
-//   return (
-//     <tr className='loading'>
-//       <td colSpan={length}>{'loading'}</td>
-//     </tr>
-//   )
-// }
+const mapRow = row => <Row key={row.data.id} name={row.name} definition={row.definition} data={row.data} />
 
-// const renderNoRecordsRow = length => {
-//   return (
-//     <tr className='no-records'>
-//       <td colSpan={length}>{'No Records'}</td>
-//     </tr>
-//   )
-// }
-
-const Rows = ({definition, data}) => {
-  // if (loadingData) {
-  //   return renderLoadingRow(def.columns.length)
-  // }
-  // if (!data || data.length === 0) {
-  //   return renderNoRecordsRow(def.columns.length)
-  // }
+const Rows = ({rows}) => {
   return (
     <tbody>
-      {data.map(row => <Row key={row.id} definition={definition} data={row} />)}
+      {rows.map(mapRow)}
     </tbody>
   )
 }
 
 Rows.propTypes = {
-  name: PropTypes.string.isRequired,
-  data: PropTypes.arrayOf(
+  rows: PropTypes.arrayOf(
     PropTypes.object
-  ).isRequired,
-  definition: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string
-    }).isRequired
-  )
+  ).isRequired
 }
 
 export default Rows

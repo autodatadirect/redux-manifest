@@ -10,10 +10,8 @@ import createSagaMiddleware from 'redux-saga'
 import { put, takeLatest } from 'redux-saga/effects'
 
 import manifestReducer from 'redux-manifest/reducer'
-import * as actions from 'redux-manifest/actions'
 import * as types from 'redux-manifest/constants/actionTypes'
-import Manifest from 'redux-manifest/containers/Manifest'
-import CellEpochDate from 'redux-manifest/components/CellEpochDate'
+import { Manifest, CellEpochDate, setPage, setError } from 'redux-manifest'
 import service from './service'
 
 /*
@@ -41,9 +39,9 @@ window.store = store
 function * sagaService (action) {
   try {
     const data = yield service(action.filter)
-    yield put(actions.setData(action.manifestName, data.data, data.count))
+    yield put(setPage(action.manifestName, data.data, data.count))
   } catch (err) {
-    yield put(actions.setError(action.manifestName, err.message))
+    yield put(setError(action.manifestName, err.message))
   }
 }
 

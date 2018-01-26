@@ -5,7 +5,7 @@ import Pager from '../../containers/Pager'
 import PageSizer from '../../containers/PageSizer'
 import Status from '../../containers/Status'
 
-const Controls = ({name, definition}) => (
+const Controls = ({name}) => (
   <div className='manifest-controls'>
     <PageSizer name={name} />
     <Status name={name} />

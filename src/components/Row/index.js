@@ -1,26 +1,21 @@
 import PropTypes from 'prop-types'
 
-const Cell = ({id, value}) => <td id={id}>{value}</td>
+const Cell = ({id, row}) => <td id={id}>{row[id]}</td>
 
-const mapCell = data => def => {
-  if (def.cellComponent) return <def.cellComponent key={def.id} id={def.id} value={data[def.id]} />
-  return <Cell key={def.id} id={def.id} value={data[def.id]} />
+const mapCell = rowCell => {
+  const def = rowCell.def
+  const data = rowCell.data
+  if (def.cellComponent) return <def.cellComponent key={def.id} value={data[def.id]} />
+  return <Cell key={def.id} id={def.id} row={data} />
 }
-
-const Row = ({definition, data}) => (
+const Row = ({rowCells}) => (
   <tr>
-    {definition.map(mapCell(data))}
+    {rowCells.map(mapCell)}
   </tr>
 )
 
 Row.propTypes = {
-  data: PropTypes.object.isRequired,
-  definition: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string
-    }).isRequired
-  )
+  rowCells: PropTypes.array.isRequired
 }
 
 export default Row
