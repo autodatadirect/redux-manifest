@@ -43,9 +43,9 @@ const LastButton = ({currentPage, loading, totalPages, changePage}) => {
   )
 }
 
-const buildNumberPageButton = changePage => numberedPageButton =>
-  <PagerButton loading={numberedPageButton.loading} key={numberedPageButton.page} page={numberedPageButton.page} currentPage={numberedPageButton.currentPage} changePage={changePage}>
-    {numberedPageButton.page + 1}
+const buildNumberPageButton = n =>
+  <PagerButton loading={n.loading} key={n.page} page={n.page} currentPage={n.currentPage} changePage={n.changePage}>
+    {n.page + 1}
   </PagerButton>
 
 const Pager = ({changePage, filter, count, loading, numberedPageButtons}) => {
@@ -56,7 +56,7 @@ const Pager = ({changePage, filter, count, loading, numberedPageButtons}) => {
     <div className='manifest-pager btn-group' role='group' aria-label='pager'>
       <FirstButton loading={loading} changePage={changePage} currentPage={currentPage} />
       <PreviousButton loading={loading} changePage={changePage} currentPage={currentPage} />
-      {numberedPageButtons.map(buildNumberPageButton(changePage))}
+      {numberedPageButtons.map(buildNumberPageButton)}
       <NextButton loading={loading} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
       <LastButton loading={loading} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
     </div>
