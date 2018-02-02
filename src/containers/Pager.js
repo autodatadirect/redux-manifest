@@ -7,24 +7,13 @@ import Pager from '../components/Pager'
 import * as actions from '../actions'
 import stateByName from '../util/stateByName'
 
-const buildArrayOfNumberedPagerButtons = ({filter, count, loading, changePage}) => {
-  const currentPage = filter.page
-  const totalPages = pagerLogic.determineTotalPages(filter.pageSize, count)
-
-  const numberedPageButtons = []
-  const pages = pagerLogic.determinePages(currentPage, totalPages)
-  for (let i = 0; i < pages.length; i++) {
-    numberedPageButtons.push({page: pages[i], loading: loading, currentPage, changePage})
-  }
-  return numberedPageButtons
-}
-
 const mapStateToProps = (state, props) => {
   const namedState = stateByName(state, props.name)
   return {
     filter: namedState.filter,
     count: namedState.count,
-    loading: namedState.loadingCount || namedState.loadingData
+    loadingCount: namedState.loadingCount,
+    loadingData: namedState.loadingData
   }
 }
 
@@ -41,7 +30,7 @@ const handlers = {
 
 const mapExtraProps = props => {
   return {
-    numberedPageButtons: buildArrayOfNumberedPagerButtons(props)
+    numberedPageButtons: pagerLogic.buildArrayOfNumberedPagerButtons(props)
   }
 }
 

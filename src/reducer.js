@@ -3,8 +3,8 @@ import * as types from './constants/actionTypes'
 export const initialState = {
   count: 0,
   data: [],
-  loadingCount: false,
-  loadingData: false,
+  loadingCount: true,
+  loadingData: true,
   error: '',
   filter: {
     page: 0,
@@ -29,7 +29,7 @@ const reduceSetError = (state, action) => console.log('reduce set error') || ({
 
 const reduceRefreshData = (state, action) => ({
   ...state,
-  loadingCount: true,
+  loadingCount: state.loadingCount || action.countNeeded,
   loadingData: true,
   error: '',
   filter: {...state.filter, ...action.filter}

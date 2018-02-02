@@ -34,10 +34,10 @@ const NextButton = ({currentPage, loading, totalPages, changePage}) => {
   )
 }
 
-const LastButton = ({currentPage, loading, totalPages, changePage}) => {
-  if (isLastPage(currentPage, totalPages)) return null
+const LastButton = ({currentPage, loadingCount, loadingData, totalPages, changePage}) => {
+  if (isLastPage(currentPage, totalPages) || loadingCount) return null
   return (
-    <PagerButton loading={loading} className={'last'} page={totalPages - 1} currentPage={currentPage} changePage={changePage}>
+    <PagerButton loading={loadingData} className={'last'} page={totalPages - 1} currentPage={currentPage} changePage={changePage}>
       {'Last'}
     </PagerButton>
   )
@@ -48,24 +48,25 @@ const buildNumberPageButton = n =>
     {n.page + 1}
   </PagerButton>
 
-const Pager = ({changePage, filter, count, loading, numberedPageButtons}) => {
+const Pager = ({changePage, filter, count, loadingCount, loadingData, numberedPageButtons}) => {
   const currentPage = filter.page
   const totalPages = pagerLogic.determineTotalPages(filter.pageSize, count)
 
   return (
     <div className='manifest-pager btn-group' role='group' aria-label='pager'>
-      <FirstButton loading={loading} changePage={changePage} currentPage={currentPage} />
-      <PreviousButton loading={loading} changePage={changePage} currentPage={currentPage} />
+      <FirstButton loading={loadingData} changePage={changePage} currentPage={currentPage} />
+      <PreviousButton loading={loadingData} changePage={changePage} currentPage={currentPage} />
       {numberedPageButtons.map(buildNumberPageButton)}
-      <NextButton loading={loading} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
-      <LastButton loading={loading} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
+      <NextButton loading={loadingData} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
+      <LastButton loadingCount={loadingCount} loadingData={loadingData} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
     </div>
   )
 }
 
 Pager.propTypes = {
   name: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loadingCount: PropTypes.bool.isRequired,
+  loadingData: PropTypes.bool.isRequired,
   changePage: PropTypes.func.isRequired,
   filter: PropTypes.object.isRequired,
   count: PropTypes.number.isRequired,

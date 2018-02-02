@@ -45,9 +45,11 @@ const cleanFilter = filterIn => {
 export const refreshData = (manifestName, filter) => {
   if (!manifestName) throw err('manifest name must be set')
   if (!filter) throw err('filter must be set')
+  filter = cleanFilter(filter)
   return {
     type: types.REFRESH_DATA,
+    countNeeded: !filter.page,
     manifestName,
-    filter: cleanFilter(filter)
+    filter
   }
 }
