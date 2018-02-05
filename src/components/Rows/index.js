@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import Row from '../../containers/Row'
 
-const mapRow = row => <Row key={row.data.id} name={row.name} definition={row.definition} data={row.data} />
+const mapRow = row => <Row key={row.data.id} id={row.data.id} name={row.name} definition={row.definition} data={row.data} />
 
 const Rows = ({rows}) => {
   return (

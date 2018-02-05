@@ -32,6 +32,15 @@ export const setCount = (manifestName, count) => {
   }
 }
 
+export const focusRow = (manifestName, id) => {
+  if (!manifestName) throw err('manifest name must be set')
+  return {
+    type: types.FOCUS_ROW,
+    manifestName,
+    id
+  }
+}
+
 const toNumber = s => +s || 0
 
 const cleanFilter = filterIn => {
