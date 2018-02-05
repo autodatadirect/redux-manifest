@@ -11,7 +11,7 @@ const mapStateToProps = (state, props) => {
   return {
     data: namedState.data,
     error: namedState.error,
-    loading: namedState.loadingCount || namedState.loadingData
+    loading: namedState.loadingData
   }
 }
 

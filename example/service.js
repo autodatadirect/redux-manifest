@@ -1,7 +1,7 @@
 import Chance from 'chance'
 
 const chance = new Chance()
-const count = 13488
+export const count = 13488
 let data
 
 const computeRow = index => ({

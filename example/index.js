@@ -6,13 +6,14 @@ import reactDom from 'react-dom'
 
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import createSagaMiddleware from 'redux-saga'
-import { put, takeLatest } from 'redux-saga/effects'
+import { default as createSagaMiddleware, delay } from 'redux-saga'
+import { put, takeLatest, takeEvery, all, call } from 'redux-saga/effects'
 
 import manifestReducer from 'redux-manifest/reducer'
 import * as types from 'redux-manifest/constants/actionTypes'
-import { Manifest, CellEpochDate, setPage, setError } from 'redux-manifest'
-import service from './service'
+import { Manifest, CellEpochDate, setPage, setError, setCount } from 'redux-manifest'
+import {default as service, count} from './service'
+import { createLogger } from 'redux-logger'
 
 /*
  * Redux
@@ -22,12 +23,15 @@ const reducer = combineReducers({
   manifest: manifestReducer
 })
 
-const loggingReducer = (s, a) => console.log('ACTION: ', a) || reducer(s, a)
+const logger = createLogger({
+  collapsed: true,
+  diff: true
+})
 
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(
-  loggingReducer,
-  applyMiddleware(sagaMiddleware)
+  reducer,
+  applyMiddleware(sagaMiddleware, logger)
 )
 
 window.store = store
@@ -36,20 +40,35 @@ window.store = store
  * Saga
  */
 
-function * sagaService (action) {
+function * sagaRefresh () {
+  yield takeLatest(types.REFRESH_DATA, sagaDataService)
+}
+
+function * sagaRefreshCount (action) {
+  yield takeEvery(types.REFRESH_DATA, sagaCountService)
+}
+
+function * sagaDataService (action) {
   try {
     const data = yield service(action.filter)
-    yield put(setPage(action.manifestName, data.data, data.count))
+    yield put(setPage(action.manifestName, data.data))
   } catch (err) {
     yield put(setError(action.manifestName, err.message))
   }
 }
 
-function * sagaRefresh () {
-  yield takeLatest(types.REFRESH_DATA, sagaService)
+function * sagaCountService (action) {
+  if (!action.countNeeded) return
+  try {
+    yield delay(5000)
+    yield put(setCount(action.manifestName, count))
+  } catch (err) {
+    yield put(setError(action.manifestName, err.message))
+  }
 }
 
 sagaMiddleware.run(sagaRefresh)
+sagaMiddleware.run(sagaRefreshCount)
 
 /*
  * Redux Manifest
