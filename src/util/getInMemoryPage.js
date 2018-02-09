@@ -1,8 +1,8 @@
 const sorter = id => (a, b) => {
   var nameA = a[id]
   var nameB = b[id]
-  if (typeof nameA === 'string') nameA.toUpperCase()
-  if (typeof nameB === 'string') nameB.toUpperCase()
+  if (typeof nameA === 'string') nameA = nameA.toUpperCase()
+  if (typeof nameB === 'string') nameB = nameB.toUpperCase()
   if (nameA < nameB) return -1
   if (nameA > nameB) return 1
   return 0
@@ -21,6 +21,7 @@ const fetchPage = (data, filter) => {
 }
 
 const sortData = (data, sorts) => {
+  // TODO Multi-column Sort Support #7
   if (!sorts || !sorts.length) return
   const sort = sorts[0]
 
