@@ -41,6 +41,15 @@ export const focusRow = (manifestName, id) => {
   }
 }
 
+export const setInMemoryData = (manifestName, data) => {
+  if (!manifestName) throw err('manifest name must be set')
+  return {
+    type: types.SET_IN_MEMORY_DATA,
+    manifestName,
+    data
+  }
+}
+
 const toNumber = s => +s || 0
 
 const cleanFilter = filterIn => {

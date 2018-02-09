@@ -11,17 +11,23 @@ const mapStateToProps = (state, props) => {
   return {
     data: namedState.data,
     error: namedState.error,
-    loading: namedState.loadingData
+    loading: namedState.loadingData,
+    inMemoryData: props.data
   }
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  refreshData: actions.refreshData
+  refreshData: actions.refreshData,
+  setInMemoryData: actions.setInMemoryData
 }, dispatch)
 
 const lifecycleMethods = {
   componentWillMount () {
-    this.props.refreshData(this.props.name, {})
+    if (this.props.inMemoryData) {
+      this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
+    } else {
+      this.props.refreshData(this.props.name, {})
+    }
   }
 }
 
