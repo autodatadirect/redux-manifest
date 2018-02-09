@@ -4,6 +4,11 @@ const chance = new Chance()
 export const count = 13488
 let data
 
+export const getData = () => {
+  if (!data) buildData()
+  return data
+}
+
 const computeRow = index => ({
   id: index,
   date: chance.date().valueOf(),

@@ -12,7 +12,7 @@ import { put, takeLatest, takeEvery, all, call } from 'redux-saga/effects'
 import manifestReducer from 'redux-manifest/reducer'
 import * as types from 'redux-manifest/constants/actionTypes'
 import { Manifest, CellEpochDate, setPage, setError, setCount } from 'redux-manifest'
-import {default as service, count} from './service'
+import service, { count, getData } from './service'
 import { createLogger } from 'redux-logger'
 
 /*
