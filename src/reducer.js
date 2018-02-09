@@ -5,6 +5,7 @@ export const initialState = {
   data: [],
   loadingCount: true,
   loadingData: true,
+  focused: null,
   error: '',
   filter: {
     page: 0,
@@ -51,12 +52,18 @@ const reduceSetData = (state, action) => ({
   count: coalesce(action.count, state.count) || 0
 })
 
+const reduceFocusRow = (state, action) => ({
+  ...state,
+  focused: action.id
+})
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.REFRESH_DATA: return reduceRefreshData(state, action)
     case types.SET_COUNT: return reduceSetCount(state, action)
     case types.SET_DATA: return reduceSetData(state, action)
     case types.SET_ERROR: return reduceSetError(state, action)
+    case types.FOCUS_ROW: return reduceFocusRow(state, action)
     default: return state
   }
 }
@@ -67,6 +74,7 @@ export default (state = {}, action) => {
     case types.SET_COUNT:
     case types.SET_DATA:
     case types.SET_ERROR:
+    case types.FOCUS_ROW:
       return {
         ...state,
         [action.manifestName]: reducer(state[action.manifestName], action)
