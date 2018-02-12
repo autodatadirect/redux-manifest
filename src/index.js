@@ -7,6 +7,7 @@ import Status from './containers/Status'
 import CellEpochDate from './components/CellEpochDate'
 import * as actions from './actions'
 import * as actionTypes from './constants/actionTypes'
+import reducer from './reducer'
 
 module.exports = {
   Headers: Headers,
@@ -20,5 +21,6 @@ module.exports = {
   setError: actions.setError,
   setCount: actions.setCount,
   refreshData: actions.refreshData,
-  actionTypes: actionTypes
+  actionTypes: actionTypes,
+  reducer: reducer
 }
