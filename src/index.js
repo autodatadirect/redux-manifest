@@ -6,6 +6,7 @@ import Rows from './containers/Rows'
 import Status from './containers/Status'
 import CellEpochDate from './components/CellEpochDate'
 import * as actions from './actions'
+import * as actionTypes from './constants/actionTypes'
 
 module.exports = {
   Headers: Headers,
@@ -18,5 +19,6 @@ module.exports = {
   setPage: actions.setPage,
   setError: actions.setError,
   setCount: actions.setCount,
-  refreshData: actions.refreshData
+  refreshData: actions.refreshData,
+  actionTypes: actionTypes
 }

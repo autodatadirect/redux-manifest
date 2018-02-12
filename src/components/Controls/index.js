@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import './index.scss'
 
 import Pager from '../../containers/Pager'
 import PageSizer from '../../containers/PageSizer'

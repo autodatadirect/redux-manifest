@@ -1,23 +1,25 @@
 @import '../../theme.scss';
 
-.sorted-asc::after,
-.sorted-desc::after {
-  width: 0;
-  display: inline-block;
-  font-size: 0.8em;
-  margin-left: 0.5em;
-}
-
-.sorted-asc::after {
-  content: '▲';
-  vertical-align: top;
-}
-
-.sorted-desc::after {
-  content: '▼';
-  vertical-align: bottom;
-}
-
-.manifest-header.loading {
-  color: $manifest-header-gray;
+.manifest-header {
+  &.sorted-asc::after,
+  &.sorted-desc::after {
+    width: 0;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 0.5em;
+  }
+  
+  &.sorted-asc::after {
+    content: '▲';
+    vertical-align: top;
+  }
+  
+  &.sorted-desc::after {
+    content: '▼';
+    vertical-align: bottom;
+  }
+  
+  &.loading {
+    color: $manifest-header-gray;
+  }
 }
