@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import './index.scss'
 
 import Rows from '../../containers/Rows'
 import Headers from '../../containers/Headers'

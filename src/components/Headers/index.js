@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import SimpleHeader from '../SimpleHeader'
-import './index.scss'
 
 const reduceSort = id => (chosen, current) => chosen || current.id === id ? current : null
 

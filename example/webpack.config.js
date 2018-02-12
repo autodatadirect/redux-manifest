@@ -9,7 +9,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'redux-manifest': path.resolve(__dirname, '../src')
+      'redux-manifest': path.resolve(__dirname, '../dist')
     }
   },
   module: {
@@ -25,6 +25,13 @@ module.exports = {
           {loader: 'style-loader'},
           {loader: 'css-loader'},
           {loader: 'sass-loader'}
+        ]
+      },
+      {
+        test: /\.(css)$/,
+        use: [
+          {loader: 'style-loader'},
+          {loader: 'css-loader'}
         ]
       }
     ]

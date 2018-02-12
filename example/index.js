@@ -7,12 +7,12 @@ import reactDom from 'react-dom'
 import { combineReducers, createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { default as createSagaMiddleware, delay } from 'redux-saga'
-import { put, takeLatest, takeEvery, all, call } from 'redux-saga/effects'
+import { put, takeLatest, takeEvery } from 'redux-saga/effects'
 
 import manifestReducer from 'redux-manifest/reducer'
-import * as types from 'redux-manifest/constants/actionTypes'
-import { Manifest, CellEpochDate, setPage, setError, setCount } from 'redux-manifest'
-import service, { count, getData } from './service'
+import 'redux-manifest/styles.css'
+import { Manifest, CellEpochDate, setPage, setError, setCount, actionTypes as types } from 'redux-manifest'
+import service, { count } from './service'
 import { createLogger } from 'redux-logger'
 
 /*
