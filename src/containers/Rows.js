@@ -6,7 +6,7 @@ import stateByName from '../util/stateByName'
 const buildArrayOfRowData = (data, props) => {
   const rows = []
   for (let i = 0; i < data.length; i++) {
-    rows.push({data: data[i], name: props.name, definition: props.definition})
+    rows.push({data: data[i], name: props.name, definition: props.definition, onRowClick: props.onRowClick})
   }
   return rows
 }

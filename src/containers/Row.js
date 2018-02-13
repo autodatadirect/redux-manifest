@@ -28,7 +28,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 }, dispatch)
 
 const handlers = {
-  handleRowClick: props => event => props.focusRow(props.name, event.currentTarget.getAttribute('data-id'))
+  handleRowClick: props => event => {
+    props.focusRow(props.name, event.currentTarget.getAttribute('data-id'))
+    if (props.onRowClick) {
+      props.onRowClick(props.data)
+    }
+  }
 }
 
 const enhance = compose(
