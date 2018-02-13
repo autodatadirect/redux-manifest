@@ -103,13 +103,14 @@ const definition = [{
   label: 'Address'
 }]
 
+const onRowClick = row => console.log('Row was clicked:', row)
 /*
  * React + Redux
  */
 
 reactDom.render(
   <Provider store={store}>
-    <Manifest name='testManifest' definition={definition} />
+    <Manifest name='testManifest' definition={definition} onRowClick={onRowClick} />
   </Provider>,
   document.getElementById('app')
 )

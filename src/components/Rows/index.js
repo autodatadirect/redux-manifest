@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import Row from '../../containers/Row'
 
-const mapRow = row => <Row key={row.data.id} id={row.data.id} name={row.name} definition={row.definition} data={row.data} />
+const mapRow = row => <Row key={row.data.id} id={row.data.id} name={row.name} definition={row.definition} data={row.data} onRowClick={row.onRowClick} />
 
-const Rows = ({rows}) => {
+const Rows = ({rows, onRowClick}) => {
   return (
     <tbody>
       {rows.map(mapRow)}
@@ -14,7 +14,8 @@ const Rows = ({rows}) => {
 Rows.propTypes = {
   rows: PropTypes.arrayOf(
     PropTypes.object
-  ).isRequired
+  ).isRequired,
+  onRowClick: PropTypes.func
 }
 
 export default Rows
