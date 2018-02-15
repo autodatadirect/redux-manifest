@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 const handlers = {
   changePageSize: props => event => {
     const pageSize = event.target.value
-    props.refreshData(props.name, {...props.filter, pageSize: pageSize})
+    props.refreshData(props.name, {...props.filter, page: 0, pageSize: pageSize})
   }
 }
 

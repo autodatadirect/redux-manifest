@@ -49,7 +49,8 @@ const remoteReduceRefreshData = (state, action) => ({
   loadingCount: state.loadingCount || action.countNeeded,
   loadingData: true,
   error: '',
-  filter: {...state.filter, ...action.filter}
+  filter: {...state.filter, ...action.filter},
+  focused: null
 })
 
 const reduceSetCount = (state, action) => ({

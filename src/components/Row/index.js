@@ -10,7 +10,7 @@ const mapCell = rowCell => {
 }
 
 const Row = ({id, rowCells, handleRowClick, focused}) => (
-  <tr data-id={id} onClick={focused ? null : handleRowClick} className={'manifest-row' + (focused ? ' focused' : '')}>
+  <tr data-id={id} onClick={handleRowClick} className={'manifest-row' + (focused ? ' focused' : '')}>
     {rowCells.map(mapCell)}
   </tr>
 )

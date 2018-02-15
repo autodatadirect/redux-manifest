@@ -29,7 +29,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 const handlers = {
   handleRowClick: props => event => {
-    props.focusRow(props.name, event.currentTarget.getAttribute('data-id'))
+    if (!props.focused) {
+      props.focusRow(props.name, event.currentTarget.getAttribute('data-id'))
+    }
     if (props.onRowClick) {
       props.onRowClick(props.data)
     }
