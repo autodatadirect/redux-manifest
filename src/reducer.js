@@ -103,6 +103,10 @@ export default (state = {}, action) => {
         ...state,
         [action.manifestName]: reducer(state[action.manifestName], action)
       }
+    case types.DESTROY:
+      const clonedState = {...state}
+      delete clonedState[action.manifestName]
+      return clonedState
     default:
       return state
   }
