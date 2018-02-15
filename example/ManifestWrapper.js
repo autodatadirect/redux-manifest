@@ -37,14 +37,27 @@ export default class ManifestWrapper extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick (row) {
+  handleClick (ev) {
     this.setState(prevState => ({
       visible: !prevState.visible
     }))
   }
 
+  onRowClick (row) {
+    console.log('You clicked the following row: ', row)
+  }
+
+  renderButton () {
+    return <button onClick={this.handleClick}>Click to mount/unmount</button>
+  }
+
   render () {
-    if (this.state.visible) return <Manifest name='testManifest' definition={definition} onRowClick={this.handleClick} />
-    return <div onClick={this.handleClick} > CLICK ME </div>
+    if (this.state.visible) {
+      return <div>
+        <Manifest name='testManifest' definition={definition} onRowClick={this.onRowClick} />
+        {this.renderButton()}
+      </div>
+    }
+    return this.renderButton()
   }
 }
