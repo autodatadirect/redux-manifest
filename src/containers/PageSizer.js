@@ -5,6 +5,7 @@ import { compose, withHandlers } from 'recompose'
 import PageSizer from '../components/PageSizer'
 import * as actions from '../actions'
 import stateByName from '../util/stateByName'
+import { initialState } from '../reducer'
 
 const mapStateToProps = (state, props) => {
   const namedState = stateByName(state, props.name)
@@ -21,7 +22,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 const handlers = {
   changePageSize: props => event => {
     const pageSize = event.target.value
-    props.refreshData(props.name, {...props.filter, pageSize: pageSize})
+    props.refreshData(props.name, {...initialState.filter, pageSize: pageSize})
   }
 }
 
