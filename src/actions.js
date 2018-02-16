@@ -50,6 +50,14 @@ export const setInMemoryData = (manifestName, data) => {
   }
 }
 
+export const destroy = (manifestName) => {
+  if (!manifestName) throw err('manifest name must be set')
+  return {
+    type: types.DESTROY,
+    manifestName
+  }
+}
+
 const toNumber = s => +s || 0
 
 const cleanFilter = filterIn => {

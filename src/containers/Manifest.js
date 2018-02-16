@@ -18,7 +18,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   refreshData: actions.refreshData,
-  setInMemoryData: actions.setInMemoryData
+  setInMemoryData: actions.setInMemoryData,
+  destroy: actions.destroy
 }, dispatch)
 
 const lifecycleMethods = {
@@ -28,6 +29,9 @@ const lifecycleMethods = {
     } else {
       this.props.refreshData(this.props.name, {})
     }
+  },
+  componentWillUnmount () {
+    this.props.destroy(this.props.name)
   }
 }
 
