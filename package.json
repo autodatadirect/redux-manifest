@@ -3,12 +3,13 @@
   "version": "1.0.8",
   "description": "A paginated table implementation using Redux and React",
   "main": "./dist/index.js",
-  "repository": "https://github.com/a-type/redux-table",
+  "repository": "https://github.com/autodatadirect/redux-manifest",
   "scripts": {
     "test": "mocha -w --compilers js:babel-core/register src/**/*.test.js",
-    "example": "cd example; node ./webpackDevServer.js",
+    "example": "cd example; webpack-dev-server",
     "build": "babel ./src -d ./dist; node-sass ./src/styles.scss ./dist/styles.css",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "demo": "start-storybook -p 9001 -c .storybook"
   },
   "keywords": [
     "manifest",
@@ -26,6 +27,9 @@
     "recompose": "^0.26.0"
   },
   "devDependencies": {
+    "@storybook/addon-knobs": "^3.3.15",
+    "@storybook/react": "^3.3.15",
+    "async": "^2.3.0",
     "babel-cli": "^6.24.1",
     "babel-core": "6.26.0",
     "babel-eslint": "^6.0.2",
@@ -34,11 +38,15 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-plugin-webpack-alias": "^2.1.2",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.22.0",
     "babel-regenerator-runtime": "^6.5.0",
+    "babel-runtime": "^6.26.0",
+    "chance": "^1.0.13",
+    "css-loader": "^0.28.9",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-config-standard-jsx": "^4.0.2",
@@ -51,22 +59,24 @@
     "exports-loader": "^0.6.4",
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "^2.28.0",
+    "immutable": "^3.8.1",
+    "lodash": "^4.17.4",
     "mocha": "^5.0.0",
     "node-sass": "^4.7.2",
+    "prop-types": "^15.5.8",
     "react": "^15.6.2",
     "react-dom": "^15.6.2",
     "react-redux": "^4.4.5",
+    "recompose": "^0.26.0",
     "redux": "^3.6.0",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^0.15.0",
+    "sass-loader": "^6.0.6",
+    "scss-loader": "0.0.1",
     "standard": "^10.0.3",
+    "style-loader": "^0.19.1",
     "webpack": "^2.3.3",
     "webpack-dev-server": "^2.4.2",
     "webpack-merge": "^4.1.0"
-  },
-  "dependencies": {
-    "async": "^2.3.0",
-    "immutable": "^3.8.1",
-    "lodash": "^4.17.4",
-    "prop-types": "^15.5.8",
-    "recompose": "^0.26.0"
   }
 }
