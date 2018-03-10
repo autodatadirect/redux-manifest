@@ -9,7 +9,7 @@
     "example": "cd example; webpack-dev-server",
     "build": "babel ./src -d ./dist; node-sass ./src/styles.scss ./dist/styles.css",
     "prepublish": "npm run build",
-    "demo": "start-storybook -p 9001 -c .storybook"
+    "demo": "start-storybook -s ./dist -p 9001 -c .storybook"
   },
   "keywords": [
     "manifest",
