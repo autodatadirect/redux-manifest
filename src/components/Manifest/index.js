@@ -1,5 +1,5 @@
+import React from 'react'
 import PropTypes from 'prop-types'
-
 import Rows from '../../containers/Rows'
 import Headers from '../../containers/Headers'
 import Controls from '../Controls'

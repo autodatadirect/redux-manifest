@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 
 const Cell = ({id, row}) => <td id={id}>{row[id]}</td>

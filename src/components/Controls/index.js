@@ -1,5 +1,5 @@
+import React from 'react'
 import PropTypes from 'prop-types'
-
 import Pager from '../../containers/Pager'
 import PageSizer from '../../containers/PageSizer'
 import Status from '../../containers/Status'
