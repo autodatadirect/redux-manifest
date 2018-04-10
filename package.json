@@ -1,6 +1,6 @@
 {
   "name": "redux-manifest",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A paginated table implementation using Redux and React",
   "main": "./dist/index.js",
   "repository": "https://github.com/autodatadirect/redux-manifest",
