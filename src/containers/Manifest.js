@@ -12,6 +12,7 @@ const mapStateToProps = (state, props) => {
     data: namedState.data,
     error: namedState.error,
     loading: namedState.loadingData,
+    filter: {...namedState.filter, ...props.filter},
     inMemoryData: props.data
   }
 }
@@ -27,7 +28,7 @@ const lifecycleMethods = {
     if (this.props.inMemoryData) {
       this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
     } else {
-      this.props.refreshData(this.props.name, {})
+      this.props.refreshData(this.props.name, this.props.filter)
     }
   },
   componentWillUnmount () {

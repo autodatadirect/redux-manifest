@@ -54,7 +54,7 @@ export default class ManifestWrapper extends React.Component {
   render () {
     if (this.state.visible) {
       return <div>
-        <Manifest name='testManifest' definition={definition} onRowClick={this.onRowClick} />
+        <Manifest name='testManifest' definition={definition} onRowClick={this.onRowClick} filter={{search: 'test', id: 123}} />
         {this.renderButton()}
       </div>
     }
