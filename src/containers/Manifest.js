@@ -12,6 +12,7 @@ const mapStateToProps = (state, props) => {
     data: namedState.data,
     error: namedState.error,
     loading: namedState.loadingData,
+    providedFilter: props.filter,
     filter: {...namedState.filter, ...props.filter},
     inMemoryData: props.data
   }
@@ -34,7 +35,8 @@ const lifecycleMethods = {
   componentWillUnmount () {
     this.props.destroy(this.props.name)
   },
-  componentWillReceiveProps () {
+  componentDidUpdate (prevProps, prevState, prevContext) {
+    if (this.props.providedFilter === prevProps.providedFilter) return
     this.props.refreshData(this.props.name, this.props.filter)
   }
 }
