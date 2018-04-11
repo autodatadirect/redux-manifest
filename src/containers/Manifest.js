@@ -33,6 +33,9 @@ const lifecycleMethods = {
   },
   componentWillUnmount () {
     this.props.destroy(this.props.name)
+  },
+  componentWillReceiveProps () {
+    this.props.refreshData(this.props.name, this.props.filter)
   }
 }
 
