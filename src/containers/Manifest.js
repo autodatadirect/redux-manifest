@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { compose, lifecycle } from 'recompose'
+import isEqual from 'lodash/isEqual'
 
 import * as actions from '../actions'
 import Manifest from '../components/Manifest'
@@ -36,7 +37,7 @@ const lifecycleMethods = {
     this.props.destroy(this.props.name)
   },
   componentDidUpdate (prevProps, prevState, prevContext) {
-    if (this.props.providedFilter === prevProps.providedFilter) return
+    if (isEqual(this.props.providedFilter, prevProps.providedFilter)) return
     this.props.refreshData(this.props.name, this.props.filter)
   }
 }
