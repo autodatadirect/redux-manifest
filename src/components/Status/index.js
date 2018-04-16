@@ -10,7 +10,7 @@ const renderTotalRecordsMessage = (loadingCount, count, filter, error) => {
   if (error) return error
   const last = determineLastOnPage(filter.page, filter.pageSize, count)
   const first = determineFirstOnPage(filter.page, filter.pageSize)
-  return `Showing ${first} to ${last} of ${count}`
+  return count < 1 ? 'No Results' : `Showing ${first} to ${last} of ${count}`
 }
 
 const Status = ({loadingCount, filter, count, error}) => (
