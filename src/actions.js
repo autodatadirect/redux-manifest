@@ -79,3 +79,14 @@ export const refreshData = (manifestName, filter) => {
     filter
   }
 }
+
+export const updateFilter = (manifestName, filter) => {
+  if (!manifestName) throw err('manifest name must be set')
+  if (!filter) throw err('filter must be set')
+  filter = cleanFilter(filter)
+  return {
+    type: types.UPDATE_FILTER,
+    manifestName,
+    filter
+  }
+}

@@ -79,9 +79,15 @@ const reduceFocusRow = (state, action) => ({
   focused: action.id
 })
 
+const reduceUpdateFilter = (state, action) => ({
+  ...state,
+  filter: {...state.filter, ...action.filter}
+})
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case types.REFRESH_DATA: return reduceRefreshData(state, action)
+    case types.UPDATE_FILTER: return reduceUpdateFilter(state, action)
     case types.SET_COUNT: return reduceSetCount(state, action)
     case types.SET_DATA: return reduceSetData(state, action)
     case types.SET_ERROR: return reduceSetError(state, action)
@@ -94,6 +100,7 @@ const reducer = (state = initialState, action) => {
 export default (state = {}, action) => {
   switch (action.type) {
     case types.REFRESH_DATA:
+    case types.UPDATE_FILTER:
     case types.SET_COUNT:
     case types.SET_DATA:
     case types.SET_ERROR:

@@ -21,6 +21,7 @@ module.exports = {
   setError: actions.setError,
   setCount: actions.setCount,
   refreshData: actions.refreshData,
+  updateFilter: actions.updateFilter,
   actionTypes: actionTypes,
   reducer: reducer
 }

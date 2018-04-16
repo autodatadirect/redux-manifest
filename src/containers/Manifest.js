@@ -14,7 +14,7 @@ const mapStateToProps = (state, props) => {
     error: namedState.error,
     loading: namedState.loadingData,
     providedFilter: props.filter,
-    filter: {...namedState.filter, ...props.filter},
+    filter: namedState.filter,
     inMemoryData: props.data
   }
 }
@@ -37,7 +37,7 @@ const lifecycleMethods = {
     this.props.destroy(this.props.name)
   },
   componentDidUpdate (prevProps, prevState, prevContext) {
-    if (isEqual(this.props.providedFilter, prevProps.providedFilter)) return
+    if (isEqual(this.props.filter, prevProps.filter)) return
     this.props.refreshData(this.props.name, this.props.filter)
   }
 }

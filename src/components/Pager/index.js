@@ -51,7 +51,7 @@ const buildNumberPageButton = n =>
 const Pager = ({changePage, filter, count, loadingCount, loadingData, numberedPageButtons}) => {
   const currentPage = filter.page
   const totalPages = pagerLogic.determineTotalPages(filter.pageSize, count)
-
+  if (!loadingCount && count < 1) return null
   return (
     <div className='manifest-pager btn-group' role='group' aria-label='pager'>
       <FirstButton loading={loadingData} changePage={changePage} currentPage={currentPage} />
