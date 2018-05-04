@@ -6,11 +6,15 @@ import Row from '../components/Row'
 import * as actions from '../actions'
 import stateByName from '../util/stateByName'
 
-const buildArrayOfRowCellData = props => {
+const buildArrayOfRowCellData = (props, namedState) => {
   const definition = props.definition
   const rowCells = []
   for (let i = 0; i < definition.length; i++) {
-    rowCells.push({def: definition[i], data: props.data})
+    rowCells.push({
+      def: definition[i],
+      data: props.data,
+      filter: namedState.filter
+    })
   }
   return rowCells
 }
@@ -18,7 +22,7 @@ const buildArrayOfRowCellData = props => {
 const mapStateToProps = (state, props) => {
   const namedState = stateByName(state, props.name)
   return {
-    rowCells: buildArrayOfRowCellData(props),
+    rowCells: buildArrayOfRowCellData(props, namedState),
     focused: namedState.focused + '' === props.id + ''
   }
 }

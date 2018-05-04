@@ -1,13 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Cell = ({id, row}) => <td id={id}>{row[id]}</td>
+const Cell = ({ rowId, value }) => <td>{value}</td>
 
 const mapCell = rowCell => {
   const def = rowCell.def
   const data = rowCell.data
-  if (def.cellComponent) return <def.cellComponent key={def.id} value={data[def.id]} />
-  return <Cell key={def.id} id={def.id} row={data} />
+  const cellProps = {
+    key: def.id,
+    rowId: def.id,
+    value: data[def.id] || '',
+    row: data,
+    filter: rowCell.filter
+  }
+  if (def.cellComponent) return <def.cellComponent {...cellProps} />
+  return <Cell {...cellProps} />
 }
 
 const Row = ({id, rowCells, handleRowClick, focused}) => (
@@ -21,6 +28,11 @@ Row.propTypes = {
   rowCells: PropTypes.array.isRequired,
   handleRowClick: PropTypes.func.isRequired,
   focused: PropTypes.bool.isRequired
+}
+
+Cell.propTypes = {
+  rowId: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 }
 
 export default Row
