@@ -9,7 +9,7 @@ const mapCell = rowCell => {
   const cellProps = {
     key: def.id,
     rowId: def.id,
-    value: data[def.id] || '',
+    value: data[def.id],
     row: data,
     filter: rowCell.filter
   }
@@ -32,7 +32,7 @@ Row.propTypes = {
 
 Cell.propTypes = {
   rowId: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any
 }
 
 export default Row
