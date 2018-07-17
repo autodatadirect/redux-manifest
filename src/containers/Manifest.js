@@ -25,8 +25,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   destroy: actions.destroy
 }, dispatch)
 
+const propsVerification = props => {
+  if (!props.definition) throw new Error('Manifest definition must be provided!')
+  if (!props.name) throw new Error('Manifest name must be provided!')
+}
+
 const lifecycleMethods = {
   componentWillMount () {
+    propsVerification(this.props)
     if (this.props.inMemoryData) {
       this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
     } else {

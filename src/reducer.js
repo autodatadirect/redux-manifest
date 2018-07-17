@@ -22,7 +22,7 @@ const coalesce = (a, b) => {
   return b
 }
 
-const reduceSetError = (state, action) => console.log('reduce set error') || ({
+const reduceSetError = (state, action) => ({
   ...state,
   loadingCount: false,
   loadingData: false,
