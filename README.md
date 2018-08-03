@@ -2,7 +2,7 @@
 A paginated table implementation using Redux and React
 
 ## Demos
-### Basic Redux Manifest Example App Demo
+### Basic Redux Manifest Example
 
 To run the **Basic Redux Manifest Example**, run the following command in the terminal:
 ```bash
