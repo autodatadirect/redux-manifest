@@ -1,6 +1,31 @@
 # Redux Manifest
 A paginated table implementation using Redux and React
 
+## API
+
+### `<Manifest />`
+
+#### Props
+**`name : String [required]`**
+
+**`loading : Boolean [required]`**
+
+**`error : String [required]`**
+
+**`definition : Array[ col1 : Object, col2 : Object, ...] [required`]**
+The definiton prop is an array of `columnDefinition` objects which define the layout and appearance of the `Manifest`.  Each `columnDefinition` has the following props:
+* `id : String [required]`
+* `label : String [optional]`
+Text to be shown in the column header
+* `sortable : Boolean [optional; default = false]`
+Whether this column can be used to sort the table rows.
+* `headerComponent : Component [optional; default = SimpleHeader]`
+Pass a `headerComponent` in the `columnDefinition` to override the default `SimpleHeader`.
+* `cellComponent : Component [optional; default = Cell]`
+Pass a `cellComponent` in the `columnDefinition` to override the default `Cell`.
+
+**`onRowClick : Function [optional]`**
+
 ## Demos
 ### Basic Redux Manifest Example
 
