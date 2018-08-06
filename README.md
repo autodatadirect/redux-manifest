@@ -43,6 +43,6 @@ To run [Storybook](https://github.com/storybooks/storybook) to test and debug in
 ```bash
 npm run demo
 ```
-This will serve **Redux-Manifest** Storybook on `localhost:9001`.  Navigate to that page in your browser to see Storybook.
+This will serve **Redux Manifest** Storybook on `localhost:9001`.  Navigate to that page in your browser to see Storybook.
 
 ![Alt text](/docs/redux-manifest-storybook.png?raw=true "Optional Title")
