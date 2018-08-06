@@ -9,7 +9,8 @@ const definition = [{
   id: 'date',
   label: 'Date',
   sortable: true,
-  cellComponent: CellEpochDate
+  cellComponent: CellEpochDate,
+  sort: 1
 }, {
   id: 'firstName',
   label: 'First Name',
@@ -17,7 +18,8 @@ const definition = [{
 }, {
   id: 'lastName',
   label: 'Last Name',
-  sortable: true
+  sortable: true,
+  sort: 2
 }, {
   id: 'age',
   label: 'Age',
