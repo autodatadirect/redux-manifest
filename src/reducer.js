@@ -66,6 +66,10 @@ const reduceSetData = (state, action) => ({
   loadingData: false,
   data: action.data,
   error: '',
+  filter: {
+    ...state.filter,
+    page: state.filter.nextPage || 0
+  },
   count: coalesce(action.count, state.count) || 0
 })
 

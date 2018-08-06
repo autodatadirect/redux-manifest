@@ -23,8 +23,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 const handlers = {
   changePage: props => event => {
-    const nextPage = event.target.getAttribute('data-page')
-    props.refreshData(props.name, {...props.filter, page: nextPage})
+    const currentPage = props.filter.page
+    const nextPage = parseInt(event.target.getAttribute('data-page'))
+    props.refreshData(props.name, {...props.filter, page: currentPage, nextPage})
   }
 }
 
