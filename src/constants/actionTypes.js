@@ -1,6 +1,7 @@
 const PREFIX = '@@redux-manifest/'
 
 export const REFRESH_DATA = PREFIX + 'REFRESH_DATA'
+export const REFRESH_COUNT = PREFIX + 'REFRESH_COUNT'
 export const UPDATE_FILTER = PREFIX + 'UPDATE_FILTER'
 export const SET_DATA = PREFIX + 'SET_DATA'
 export const SET_COUNT = PREFIX + 'SET_COUNT'

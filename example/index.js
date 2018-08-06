@@ -46,7 +46,7 @@ function * sagaRefresh () {
 }
 
 function * sagaRefreshCount (action) {
-  yield takeEvery(types.REFRESH_DATA, sagaCountService)
+  yield takeEvery(types.REFRESH_COUNT, sagaCountService)
 }
 
 function * sagaDataService (action) {
@@ -59,7 +59,6 @@ function * sagaDataService (action) {
 }
 
 function * sagaCountService (action) {
-  if (!action.countNeeded) return
   try {
     yield delay(5000)
     yield put(setCount(action.manifestName, count))

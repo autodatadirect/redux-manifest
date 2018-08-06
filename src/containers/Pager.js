@@ -18,13 +18,18 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  refreshData: actions.refreshData
+  refreshData: actions.refreshData,
+  refreshCount: actions.refreshCount
 }, dispatch)
 
 const handlers = {
   changePage: props => event => {
-    const nextPage = event.target.getAttribute('data-page')
-    props.refreshData(props.name, {...props.filter, page: nextPage})
+    const nextPage = window.parseInt(event.target.getAttribute('data-page'))
+    const updatedFilter = {...props.filter, page: nextPage}
+    if (updatedFilter && !updatedFilter.page) {
+      props.refreshCount(props.name, updatedFilter)
+    }
+    props.refreshData(props.name, updatedFilter)
   }
 }
 

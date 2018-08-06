@@ -21,6 +21,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   refreshData: actions.refreshData,
+  refreshCount: actions.refreshCount,
   setInMemoryData: actions.setInMemoryData,
   destroy: actions.destroy
 }, dispatch)
@@ -36,6 +37,9 @@ const lifecycleMethods = {
     if (this.props.inMemoryData) {
       this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
     } else {
+      if (this.props.filter && !this.props.filter.page) {
+        this.props.refreshCount(this.props.name, this.props.filter)
+      }
       this.props.refreshData(this.props.name, this.props.filter)
     }
   },
