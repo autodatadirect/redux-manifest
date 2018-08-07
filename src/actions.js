@@ -80,6 +80,17 @@ export const refreshData = (manifestName, filter) => {
   }
 }
 
+export const refreshCount = (manifestName, filter) => {
+  if (!manifestName) throw err('manifest name must be set')
+  if (!filter) throw err('filter must be set')
+  filter = cleanFilter(filter)
+  return {
+    type: types.REFRESH_COUNT,
+    manifestName,
+    filter
+  }
+}
+
 export const updateFilter = (manifestName, filter) => {
   if (!manifestName) throw err('manifest name must be set')
   if (!filter) throw err('filter must be set')

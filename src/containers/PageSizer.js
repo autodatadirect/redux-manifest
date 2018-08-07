@@ -15,13 +15,16 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  refreshData: actions.refreshData
+  refreshData: actions.refreshData,
+  refreshCount: actions.refreshCount
 }, dispatch)
 
 const handlers = {
   changePageSize: props => event => {
     const pageSize = event.target.value
-    props.refreshData(props.name, {...props.filter, page: 0, pageSize: pageSize})
+    const updatedFilter = {...props.filter, page: 0, pageSize}
+    props.refreshCount(props.name, updatedFilter)
+    props.refreshData(props.name, updatedFilter)
   }
 }
 

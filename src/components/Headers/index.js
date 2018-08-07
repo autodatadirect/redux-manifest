@@ -18,7 +18,7 @@ const mapHeader = (sorts, updateSort, loading) => def => {
     sortAsc: sortIsAsc(getSort(def.id, sorts))
   }
   if (def.headerComponent) return <def.headerComponent {...headerProps} />
-  return <SimpleHeader {...headerProps} />
+  return <SimpleHeader key={headerProps.id} {...headerProps} />
 }
 
 const Headers = ({definition, sorts, updateSort, loading}) => {
