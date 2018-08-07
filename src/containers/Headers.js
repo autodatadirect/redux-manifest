@@ -24,12 +24,13 @@ const hasClass = (className, classString) => classString.match(className) !== nu
 
 const updateFilterSort = (id, isAsc, sorts) => [{id, isAsc}]
 
+const countNeeded = filter => filter && !filter.page
 const handlers = {
   updateSort: props => event => {
     const isAsc = !hasClass('sorted-asc', event.target.className)
     const id = event.target.getAttribute('data-id')
     const updatedFilter = {...props.filter, sorts: updateFilterSort(id, isAsc, props.filter.sorts)}
-    if (updatedFilter && !updatedFilter.page) {
+    if (countNeeded(updatedFilter)) {
       props.refreshCount(props.name, updatedFilter)
     }
     props.refreshData(props.name, updatedFilter)

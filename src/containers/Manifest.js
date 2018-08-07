@@ -31,13 +31,14 @@ const propsVerification = props => {
   if (!props.name) throw new Error('Manifest name must be provided!')
 }
 
+const countNeeded = filter => filter && !filter.page
 const lifecycleMethods = {
   componentWillMount () {
     propsVerification(this.props)
     if (this.props.inMemoryData) {
       this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
     } else {
-      if (this.props.filter && !this.props.filter.page) {
+      if (countNeeded(this.props.filter)) {
         this.props.refreshCount(this.props.name, this.props.filter)
       }
       this.props.refreshData(this.props.name, this.props.filter)
