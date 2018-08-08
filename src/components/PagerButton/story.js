@@ -14,5 +14,6 @@ stories.add('Basic', () => (
     currentPage={number('currentPage', 3)}
     children={text('children', 'Page 2')}
     className={text('className', '')}
+    loadingPage={number('page', 1)}
   />
 ))

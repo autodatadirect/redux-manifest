@@ -11,7 +11,8 @@ export const initialState = {
   filter: {
     page: 0,
     pageSize: 10,
-    sorts: []
+    sorts: [],
+    loadingPage: 0
   }
 }
 
@@ -68,7 +69,7 @@ const reduceSetData = (state, action) => ({
   error: '',
   filter: {
     ...state.filter,
-    page: state.filter.nextPage || state.filter.page
+    page: state.filter.loadingPage
   },
   count: coalesce(action.count, state.count) || 0
 })

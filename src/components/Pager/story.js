@@ -8,7 +8,8 @@ import { buildArrayOfNumberedPagerButtons } from './pagerLogic'
 const buttonData = buildArrayOfNumberedPagerButtons({
   filter: {
     page: 5,
-    pageSize: 10
+    pageSize: 10,
+    loadingPage: 6
   },
   count: 23423,
   loadingCount: false,
