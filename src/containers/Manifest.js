@@ -37,7 +37,7 @@ const lifecycleMethods = {
     propsVerification(this.props)
     if (this.props.inMemoryData) {
       this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
-    } else {
+    } else if (this.props.autoLoad !== false) {
       if (countNeeded(this.props.filter)) {
         this.props.refreshCount(this.props.name, this.props.filter)
       }
