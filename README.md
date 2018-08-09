@@ -83,17 +83,16 @@ function * sagaCountService (action) {
 
 # API
 
-
 ## Manifest Component
 
 The `Manifest` component is the primary component for using
-
 
 | Prop | Required | Type | Description |
 | --- | :---: | --- | --- |
 | _name_ | * | string | used by Redux Manifest to refer to the specific manifest when dispatching actions and updating the state |
 | _definition_ | * | array | an array of objects which define the layout and appearance of the manifest |
 | _autoLoad_ |  | boolean | instructs the manfiest to request data on mount, defaults to `true` |
+| _data_ |  | array | an array of entry objects that represent the complete dataset for this manifest, using this prop creates an in memory manifest so that responding to the `REFRESH_DATA` and `REFRESH_COUNT` actions is no longer required |
 
 
 ## Manifest Definition
@@ -131,7 +130,6 @@ __Manifest Definition Fields__
 | _headerComponent_ |  | Component | override the default cell component |
 | _cellComponent_ |  | Component | override the default header component |
 
-
 ## Actions
 
 | Action Type | Creator | Fields | Description |
@@ -145,7 +143,6 @@ __Manifest Definition Fields__
 | _@@redux-manifest/FOCUS_ROW_ | focusRow | `manifestName`<br>`id` | can be dispatched by the manifest or implementor to set the focused row |
 | _@@redux-manifest/SET_IN_MEMORY_DATA_ | setInMemoryData | `manifestName`<br>`data` | dispatched by the manifest when the `data` is set on the manifest component |
 | _@@redux-manifest/DESTROY_ | destroy | `manifestName` | dispatched by the manifest when the component is unmounted and is responsible for cleaning up the store when manifest information is no longer needed |
-
 
 | Action Field | Type | Description |
 | --- | --- | --- |
