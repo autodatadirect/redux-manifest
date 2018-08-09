@@ -1,42 +1,21 @@
 # Redux Manifest
-A paginated table implementation using Redux and React
 
-## API
+Redux Manifest is a paginated table built for react and redux designed to be backed by an asyncronous service.
+To make this work in a generic fashion, it dispatches two actions to obtain the data to display: `@@redux-manifest/REFRESH_DATA` and `@@redux-manifest/REFRESH_COUNT`.
+It is up to the system implementing the manifest to handle these actions, if they are left unhandled the manifest will not load.
 
-### Components
+The `@@redux-manifest/REFRESH_DATA` action is handled by dispatching a `@@redux-manifest/SET_DATA` action and the `@@redux-manifest/REFRESH_COUNT` action is hanled by dispatching a `@@redux-manifest/SET_COUNT`. If there is an error retrieveing the data for either of these actions a `@@redux-manifest/SET_ERROR` action should be dispatched.
 
-#### `<Manifest /> : Component`
-The `Manifest` component is the primary component for using
-##### Props
-**`name : String [required]`**
-The `name` prop is used by Redux Manifest to refer to the specific manifest when dispatching actions and updating the state.
+The data is expected to be returned as an array of entry objects on the `@@redux-manifest/SET_DATA` action.
+The manifest uses a definition object, a required manifest prop, to transform the entry objects into the columns of a row in the manifest table.
 
-**`loading : Boolean [required]`**
-Whether data is currently loading for the manifest.  While loading, the manifest is placed in "loading" mode and has an obvious style.
-![screenshot of Manifest Component Loading prop example](/docs/manifest-component-loading-example.gif?raw=true "Manifest Component Loading prop")
 
-**`error : String [required]`**
-An error message to be displayed to the user.
+# Getting Started
 
-**`definition : Array[ col1 : Object, col2 : Object, ...] [required`]**
-The definiton prop is an array of `columnDefinition` objects which define the layout and appearance of the `Manifest`.  Each `columnDefinition` has the following props:
-* `id : String [required]`
-* `label : String [optional]`
-Text to be shown in the column header
-* `sortable : Boolean [optional; default = false]`
-Whether this column can be used to sort the table rows.
-* `headerComponent : Component [optional; default = SimpleHeader]`
-Pass a `headerComponent` in the `columnDefinition` to override the default `SimpleHeader`.
-* `cellComponent : Component [optional; default = Cell]`
-Pass a `cellComponent` in the `columnDefinition` to override the default `Cell`.
+__Create the manifest manifest definition.__
 
-**`onRowClick : Function [optional]`**
-
-##### Example
 ```javascript
-import { Manifest, CellEpochDate } from 'redux-manifest'
-
-const def = [
+const definition = [
   {
     id: 'customer-name',
     label: 'Name',
@@ -47,56 +26,153 @@ const def = [
     cellComponent: CellEpochDate
   }
 ]
+```
 
-const Layout = props =>
-  <div>
-    <Manifest
-      name='customer-manifest'
-      loading={false}
-      error=''
-      definition ={def}
-    />
-  </div>
+__Add the `Manifest` component and give it a name and the definition.__
+
+```javascript
+import { Manifest } from 'redux-manifest'
+
+<Manifest name='testManifest' definition={definition} />
+```
+
+__Add the Redux Manifest reducer to your application's reducer__
+
+```javascript
+import manifestReducer from 'redux-manifest/reducer'
+
+const rootReducer = combineReducers({
+  ...
+  manifest: manifestReducer
+})
+```
+
+__Write the code to handle the actions, this example is using [sagas](https://github.com/redux-saga/redux-saga).__
+This code will look different in every system and is here as an example only.
+
+
+```javascript
+import { setPage, setError, setCount, actionTypes as types } from 'redux-manifest'
+
+function * sagaRefresh () {
+  yield takeLatest(types.REFRESH_DATA, sagaDataService)
+}
+
+function * sagaRefreshCount (action) {
+  yield takeEvery(types.REFRESH_COUNT, sagaCountService)
+}
+
+function * sagaDataService (action) {
+  try {
+    const data = yield service.getData(action.filter)
+    yield put(setPage(action.manifestName, data.data))
+  } catch (err) {
+    yield put(setError(action.manifestName, err.message))
+  }
+}
+
+function * sagaCountService (action) {
+  try {
+    const count = yield service.getCount(action.filter)
+    yield put(setCount(action.manifestName, count))
+  } catch (err) {
+    yield put(setError(action.manifestName, err.message))
+  }
 }
 ```
-![screenshot of Manifest Component example](/docs/manifest-component-example.png?raw=true "Manifest Component")
 
-#### `<Headers /> : Component`
-#### `<Pager /> : Component`
-#### `<PageSizer /> : Component`
-#### `<Rows /> : Component`
-#### `<Status /> : Component`
-#### `<CellEpochDate /> : Component`
+# API
 
-### Action Creators
 
-#### `setPage : Function()`
-#### `setError : Function()`
-#### `setCount : Function()`
-#### `refreshData : Function()`
-#### `updateFilter : Function()`
+## Manifest Component
 
-### `actionTypes : Object`
+The `Manifest` component is the primary component for using
 
-### `reducer : Function()`
 
-## Demos
-### Basic Redux Manifest Example
+| Prop | Required | Type | Description |
+| --- | :---: | --- | --- |
+| _name_ | * | string | used by Redux Manifest to refer to the specific manifest when dispatching actions and updating the state |
+| _definition_ | * | array | an array of objects which define the layout and appearance of the manifest |
+| _autoLoad_ |  | boolean | instructs the manfiest to request data on mount, defaults to `true` |
+
+
+## Manifest Definition
+
+The manifest definiton is an array of column definition objects which define the layout and appearance of the manifest.
+Each column definition object has at least two fields, `id` and `label`.
+The manifest definition is a required prop for the manifest component.
+
+__Example Manifest Definition__
+
+```javascript
+[{
+  id: 'name',
+  label: 'Customer Name'
+}, {
+  id: 'phone',
+  label: 'Phone Number',
+  sortable: true,
+}, {
+  id: 'date',
+  label: 'Creation Date',
+  sortable: true,
+  cellComponent: CustomDateCellComponent,
+  headerComponent: CustomDateHeaderComponent
+}]
+```
+
+__Manifest Definition Fields__
+
+| Column Field | Required | Type | Description |
+| --- | :---: | --- | --- |
+| _id_ | * | string | key used to pull data from the row's entry object |
+| _label_ | * | string | text to be shown in the column header |
+| _sortable_ |  | boolean  | determines if the column can be sorted |
+| _headerComponent_ |  | Component | override the default cell component |
+| _cellComponent_ |  | Component | override the default header component |
+
+
+## Actions
+
+| Action Type | Creator | Fields | Description |
+| --- | --- | --- | --- |
+| _@@redux-manifest/REFRESH_DATA_ | refreshData | `manifestName`<br>`countNeeded`<br>`filter`<br> | dispatched by the manifest when new data is required |
+| _@@redux-manifest/REFRESH_COUNT_ | refreshCount | `manifestName`<br>`filter` | dispatched by the manifest when the count needs to be updated |
+| _@@redux-manifest/UPDATE_FILTER_ | updateFilter | `manifestName`<br>`filter` | dispatched by implementor to change the filter the manifest is using, this will cause `REFRESH_DATA` and `REFRESH_COUNT` to be dispatched |
+| _@@redux-manifest/SET_DATA_ | setPage | `manifestName`<br>``data``<br>`count` | dispatched by the implementor in response to a `REFRESH_DATA` action with the requested data |
+| _@@redux-manifest/SET_COUNT_ | setCount | `manifestName`<br>`count` | dispatched by the implementor in response to a `REFRESH_COUNT` action with the requested count |
+| _@@redux-manifest/SET_ERROR_ | setError | `manifestName`<br>`message` | dispatched by implementor to inform the manifest that processing a `REFRESH_DATA` or `REFRESH_COUNT` action failed |
+| _@@redux-manifest/FOCUS_ROW_ | focusRow | `manifestName`<br>`id` | can be dispatched by the manifest or implementor to set the focused row |
+| _@@redux-manifest/SET_IN_MEMORY_DATA_ | setInMemoryData | `manifestName`<br>`data` | dispatched by the manifest when the `data` is set on the manifest component |
+| _@@redux-manifest/DESTROY_ | destroy | `manifestName` | dispatched by the manifest when the component is unmounted and is responsible for cleaning up the store when manifest information is no longer needed |
+
+
+| Action Field | Type | Description |
+| --- | --- | --- |
+| `manifestName` | string | unique name given to identifiy a manifest in the app |
+| `countNeeded` | boolean | `true` when the count needs to be update, a `REFRESH_COUNT` action is also dispatched |
+| `fitler` | object | an object containing all the information needed to determine the rows on the current page and total count |
+| `data` | array | an array of objects where every object is used to create a row in the current page of the table for the current filter |
+| `count` | number | the total row count for the current filter |
+| `message` | string | used on the `SET_ERROR` action to hold the error message |
+| `id` | string | the row id |
+
+## Filter Object
+
+```javascript
+filter: {
+  page: 0,
+  pageSize: 10,
+  sorts: []
+}
+```
+
+# Example
 
 To run the **Basic Redux Manifest Example**, run the following command in the terminal:
 ```bash
+npm install
 npm run example
 ```
-This will serve the application on `localhost:8081`.  Navigate to that page in your browser to see the Basic Redux Manifest Example.
 
-![screenshot of Basic Redux Manifest example](/docs/basic-redux-manifest-example.png?raw=true "Basic Redux Manifest Example")
-
-### Storybook
-
-To run [Storybook](https://github.com/storybooks/storybook) to test and debug individual React Components, run the following command in the terminal:
-```bash
-npm run demo
-```
-This will serve **Redux Manifest Storybook** on `localhost:9001`.  Navigate to that page in your browser to see Storybook.
-
-![screenshot of Redux Manifest Storybook](/docs/redux-manifest-storybook.png?raw=true "Redux Manifest Storybook")
+This will serve the application on [http://localhost:8081]().  Navigate to that page in your browser to see the Basic Redux Manifest Example.
