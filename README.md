@@ -127,8 +127,8 @@ __Manifest Definition Fields__
 | _id_ | * | string | key used to pull data from the row's entry object |
 | _label_ | * | string | text to be shown in the column header |
 | _sortable_ |  | boolean  | determines if the column can be sorted |
-| _headerComponent_ |  | Component | override the default cell component |
-| _cellComponent_ |  | Component | override the default header component |
+| _cellComponent_ |  | Component | override the default cell component |
+| _headerComponent_ |  | Component | override the default header component |
 
 ## Actions
 
