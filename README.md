@@ -12,7 +12,7 @@ The manifest uses a definition object, a required manifest prop, to transform th
 
 # Getting Started
 
-__Create the manifest manifest definition.__
+__Create the manifest definition.__
 
 ```javascript
 const definition = [
