@@ -1,10 +1,10 @@
 # Redux Manifest
 
-Redux Manifest is a paginated table built for react and redux designed to be backed by an asyncronous service.
+Redux Manifest is a paginated table built for react and redux designed to be backed by an asynchronous service.
 To make this work in a generic fashion, it dispatches two actions to obtain the data to display: `@@redux-manifest/REFRESH_DATA` and `@@redux-manifest/REFRESH_COUNT`.
 It is up to the system implementing the manifest to handle these actions, if they are left unhandled the manifest will not load.
 
-The `@@redux-manifest/REFRESH_DATA` action is handled by dispatching a `@@redux-manifest/SET_DATA` action and the `@@redux-manifest/REFRESH_COUNT` action is hanled by dispatching a `@@redux-manifest/SET_COUNT`. If there is an error retrieveing the data for either of these actions a `@@redux-manifest/SET_ERROR` action should be dispatched.
+The `@@redux-manifest/REFRESH_DATA` action is handled by dispatching a `@@redux-manifest/SET_DATA` action and the `@@redux-manifest/REFRESH_COUNT` action is handled by dispatching a `@@redux-manifest/SET_COUNT`. If there is an error retrieving the data for either of these actions a `@@redux-manifest/SET_ERROR` action should be dispatched.
 
 The data is expected to be returned as an array of entry objects on the `@@redux-manifest/SET_DATA` action.
 The manifest uses a definition object, a required manifest prop, to transform the entry objects into the columns of a row in the manifest table.
@@ -91,13 +91,13 @@ The `Manifest` component is the primary component for using
 | --- | :---: | --- | --- |
 | _name_ | * | string | used by Redux Manifest to refer to the specific manifest when dispatching actions and updating the state |
 | _definition_ | * | array | an array of objects which define the layout and appearance of the manifest |
-| _autoLoad_ |  | boolean | instructs the manfiest to request data on mount, defaults to `true` |
+| _autoLoad_ |  | boolean | instructs the manifest to request data on mount, defaults to `true` |
 | _data_ |  | array | an array of entry objects that represent the complete dataset for this manifest, using this prop creates an in memory manifest so that responding to the `REFRESH_DATA` and `REFRESH_COUNT` actions is no longer required |
 
 
 ## Manifest Definition
 
-The manifest definiton is an array of column definition objects which define the layout and appearance of the manifest.
+The manifest definition is an array of column definition objects which define the layout and appearance of the manifest.
 Each column definition object has at least two fields, `id` and `label`.
 The manifest definition is a required prop for the manifest component.
 
@@ -146,9 +146,9 @@ __Manifest Definition Fields__
 
 | Action Field | Type | Description |
 | --- | --- | --- |
-| `manifestName` | string | unique name given to identifiy a manifest in the app |
+| `manifestName` | string | unique name given to identify a manifest in the app |
 | `countNeeded` | boolean | `true` when the count needs to be update, a `REFRESH_COUNT` action is also dispatched |
-| `fitler` | object | an object containing all the information needed to determine the rows on the current page and total count |
+| `filter` | object | an object containing all the information needed to determine the rows on the current page and total count |
 | `data` | array | an array of objects where every object is used to create a row in the current page of the table for the current filter |
 | `count` | number | the total row count for the current filter |
 | `message` | string | used on the `SET_ERROR` action to hold the error message |
