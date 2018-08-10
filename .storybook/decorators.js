@@ -11,13 +11,18 @@ const reducer = combineReducers({
 const data = [{
   id: 1,
   col1: 'row1a',
-  col2: 'row1b'
+  col2: 'row1b',
+  colDate: '2015-07-12'
 },{
   id: 2,
   col1: 'row2'
 },{
   id: 3,
-  col1: 'row3'
+  col1: 'row3',
+  colDate: '2018-01-01'
+},{
+  id: 4,
+  colDate: '2016-03-21'
 }]
 
 const store = createStore(reducer)

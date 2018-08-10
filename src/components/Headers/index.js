@@ -8,15 +8,18 @@ const getSort = (id, sorts) => sorts.reduce(reduceSort(id), null)
 
 const sortIsAsc = sort => sort && sort.isAsc
 
-const mapHeader = (sorts, updateSort, loading) => def =>
-  <SimpleHeader key={def.id}
-    id={def.id}
-    loading={loading}
-    label={def.label || def.id}
-    sortable={def.sortable || false}
-    updateSort={(loading || !def.sortable) ? () => null : updateSort}
-    sortAsc={sortIsAsc(getSort(def.id, sorts))}
-  />
+const mapHeader = (sorts, updateSort, loading) => def => {
+  const headerProps = {
+    id: def.id,
+    loading: loading,
+    label: def.label || def.id,
+    sortable: def.sortable || false,
+    updateSort: (loading || !def.sortable) ? () => null : updateSort,
+    sortAsc: sortIsAsc(getSort(def.id, sorts))
+  }
+  if (def.headerComponent) return <def.headerComponent {...headerProps} />
+  return <SimpleHeader key={headerProps.id} {...headerProps} />
+}
 
 const Headers = ({definition, sorts, updateSort, loading}) => {
   return (
@@ -41,7 +44,8 @@ Headers.propTypes = {
   definition: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      label: PropTypes.string
+      label: PropTypes.string,
+      sortable: PropTypes.Boolean
     }).isRequired
   )
 }

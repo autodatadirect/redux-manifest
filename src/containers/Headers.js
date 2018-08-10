@@ -16,18 +16,24 @@ const mapStateToProps = (state, props) => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  refreshData: actions.refreshData
+  refreshData: actions.refreshData,
+  refreshCount: actions.refreshCount
 }, dispatch)
 
 const hasClass = (className, classString) => classString.match(className) !== null
 
 const updateFilterSort = (id, isAsc, sorts) => [{id, isAsc}]
 
+const countNeeded = filter => filter && !filter.page
 const handlers = {
   updateSort: props => event => {
     const isAsc = !hasClass('sorted-asc', event.target.className)
     const id = event.target.getAttribute('data-id')
-    props.refreshData(props.name, {...props.filter, sorts: updateFilterSort(id, isAsc, props.filter.sorts)})
+    const updatedFilter = {...props.filter, sorts: updateFilterSort(id, isAsc, props.filter.sorts)}
+    if (countNeeded(updatedFilter)) {
+      props.refreshCount(props.name, updatedFilter)
+    }
+    props.refreshData(props.name, updatedFilter)
   }
 }
 
