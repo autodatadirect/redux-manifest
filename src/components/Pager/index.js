@@ -44,7 +44,7 @@ const LastButton = ({currentPage, loadingCount, loadingData, totalPages, changeP
 }
 
 const buildNumberPageButton = n =>
-  <PagerButton loading={n.loading} key={n.page} page={n.page} currentPage={n.currentPage} changePage={n.changePage}>
+  <PagerButton loading={n.loading} key={n.page} page={n.page} currentPage={n.currentPage} changePage={n.changePage} loadingPage={n.loadingPage}>
     {n.page + 1}
   </PagerButton>
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const PagerButton = ({page, loading, currentPage, changePage, children, className}) => {
+const PagerButton = ({page, loading, currentPage, changePage, children, className, loadingPage}) => {
   let buttonStyle = 'btn pager-button'
   if (className) buttonStyle += ' ' + className
   buttonStyle += (currentPage === page) ? ' btn-primary' : ' btn-default'
+  buttonStyle += (loading && loadingPage === page) ? ' pager-button-loading' : ''
   return (
     <button data-page={page} className={buttonStyle} onClick={changePage} disabled={loading}>
       {children}
@@ -18,7 +19,8 @@ PagerButton.propTypes = {
   page: PropTypes.number.isRequired,
   currentPage: PropTypes.number.isRequired,
   children: PropTypes.any.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  loadingPage: PropTypes.number
 }
 
 export default PagerButton

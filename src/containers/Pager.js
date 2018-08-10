@@ -13,7 +13,8 @@ const mapStateToProps = (state, props) => {
     filter: namedState.filter,
     count: namedState.count,
     loadingCount: namedState.loadingCount,
-    loadingData: namedState.loadingData
+    loadingData: namedState.loadingData,
+    loadingPage: namedState.filter.loadingPage
   }
 }
 
@@ -24,8 +25,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 
 const handlers = {
   changePage: props => event => {
-    const nextPage = window.parseInt(event.target.getAttribute('data-page'), 10)
-    const updatedFilter = {...props.filter, page: nextPage}
+    const currentPage = props.filter.page
+    const loadingPage = window.parseInt(event.target.getAttribute('data-page'), 10)
+    const updatedFilter = {...props.filter, page: currentPage, loadingPage}
     if (updatedFilter && !updatedFilter.page) {
       props.refreshCount(props.name, updatedFilter)
     }

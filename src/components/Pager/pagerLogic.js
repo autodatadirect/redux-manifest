@@ -19,13 +19,13 @@ export const determinePages = (currentPage, loading, pageSize, count) => {
   return pages
 }
 
-export const buildArrayOfNumberedPagerButtons = ({filter, count, loadingCount, loadingData, changePage}) => {
+export const buildArrayOfNumberedPagerButtons = ({filter, count, loadingCount, loadingData, changePage, loadingPage}) => {
   const currentPage = filter.page
   const numberedPageButtons = []
   const pages = determinePages(currentPage, loadingCount, filter.pageSize, count)
 
   for (let i = 0; i < pages.length; i++) {
-    numberedPageButtons.push({page: pages[i], loading: loadingData, currentPage, changePage})
+    numberedPageButtons.push({page: pages[i], loading: loadingData, currentPage, changePage, loadingPage})
   }
 
   return numberedPageButtons

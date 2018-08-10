@@ -1,0 +1,9 @@
+@import '../../theme.scss';
+
+.pager-button {
+  cursor: pointer;
+}
+
+.pager-button-loading {
+  background-color: $loading-blue;
+}
