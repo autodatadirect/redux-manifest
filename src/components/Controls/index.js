@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Pager from '../../containers/Pager'
-import PageSizer from '../../containers/PageSizer'
-import Status from '../../containers/Status'
+import Pager from '../Pager'
+import PageSizer from '../PageSizer'
+import Status from '../Status'
 
 const Controls = ({name}) => (
   <div className='manifest-controls'>

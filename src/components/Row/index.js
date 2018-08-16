@@ -1,38 +1,50 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { compose, withHandlers } from 'recompose'
 
-const Cell = ({ rowId, value }) => <td>{value}</td>
+import Row from './component'
+import * as actions from '../../actions'
+import stateByName from '../../util/stateByName'
 
-const mapCell = rowCell => {
-  const def = rowCell.def
-  const data = rowCell.data
-  const cellProps = {
-    key: def.id,
-    rowId: def.id,
-    value: data[def.id],
-    row: data,
-    filter: rowCell.filter
+const buildArrayOfRowCellData = (props, namedState) => {
+  const definition = props.definition
+  const rowCells = []
+  for (let i = 0; i < definition.length; i++) {
+    rowCells.push({
+      def: definition[i],
+      data: props.data,
+      filter: namedState.filter
+    })
   }
-  if (def.cellComponent) return <def.cellComponent {...cellProps} />
-  return <Cell {...cellProps} />
+  return rowCells
 }
 
-const Row = ({id, rowCells, handleRowClick, focused}) => (
-  <tr data-id={id} onClick={handleRowClick} className={'manifest-row' + (focused ? ' focused' : '')}>
-    {rowCells.map(mapCell)}
-  </tr>
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    rowCells: buildArrayOfRowCellData(props, namedState),
+    focused: namedState.focused + '' === props.id + ''
+  }
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  focusRow: actions.focusRow
+}, dispatch)
+
+const handlers = {
+  handleRowClick: props => event => {
+    if (!props.focused) {
+      props.focusRow(props.name, event.currentTarget.getAttribute('data-id'))
+    }
+    if (props.onRowClick) {
+      props.onRowClick(props.data)
+    }
+  }
+}
+
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withHandlers(handlers)
 )
 
-Row.propTypes = {
-  id: PropTypes.any.isRequired,
-  rowCells: PropTypes.array.isRequired,
-  handleRowClick: PropTypes.func.isRequired,
-  focused: PropTypes.bool.isRequired
-}
-
-Cell.propTypes = {
-  rowId: PropTypes.any.isRequired,
-  value: PropTypes.any
-}
-
-export default Row
+export default enhance(Row)

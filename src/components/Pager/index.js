@@ -1,76 +1,48 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { compose, withHandlers, withProps } from 'recompose'
 import * as pagerLogic from './pagerLogic'
 
-import PagerButton from '../PagerButton'
+import Pager from './component'
+import * as actions from '../../actions'
+import stateByName from '../../util/stateByName'
 
-const isFirstPage = currentPage => currentPage < 1
-const isLastPage = (currentPage, totalPages) => currentPage === totalPages - 1
-
-const FirstButton = ({currentPage, loading, changePage}) => {
-  if (isFirstPage(currentPage)) return null
-  return (
-    <PagerButton loading={loading} className={'first'} page={0} currentPage={currentPage} changePage={changePage}>
-      {'First'}
-    </PagerButton>
-  )
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    filter: namedState.filter,
+    count: namedState.count,
+    loadingCount: namedState.loadingCount,
+    loadingData: namedState.loadingData
+  }
 }
 
-const PreviousButton = ({currentPage, loading, changePage}) => {
-  if (isFirstPage(currentPage)) return null
-  return (
-    <PagerButton loading={loading} className={'previous'} page={currentPage - 1} currentPage={currentPage} changePage={changePage}>
-      {'<'}
-    </PagerButton>
-  )
+const mapDispatchToProps = dispatch => bindActionCreators({
+  refreshData: actions.refreshData,
+  refreshCount: actions.refreshCount
+}, dispatch)
+
+const handlers = {
+  changePage: props => event => {
+    const nextPage = window.parseInt(event.target.getAttribute('data-page'), 10)
+    const updatedFilter = {...props.filter, page: nextPage}
+    if (updatedFilter && !updatedFilter.page) {
+      props.refreshCount(props.name, updatedFilter)
+    }
+    props.refreshData(props.name, updatedFilter)
+  }
 }
 
-const NextButton = ({currentPage, loading, totalPages, changePage}) => {
-  if (isLastPage(currentPage, totalPages)) return null
-  return (
-    <PagerButton loading={loading} className={'next'} page={currentPage + 1} currentPage={currentPage} changePage={changePage}>
-      {'>'}
-    </PagerButton>
-  )
+const mapExtraProps = props => {
+  return {
+    numberedPageButtons: pagerLogic.buildArrayOfNumberedPagerButtons(props)
+  }
 }
 
-const LastButton = ({currentPage, loadingCount, loadingData, totalPages, changePage}) => {
-  if (isLastPage(currentPage, totalPages) || loadingCount) return null
-  return (
-    <PagerButton loading={loadingData} className={'last'} page={totalPages - 1} currentPage={currentPage} changePage={changePage}>
-      {'Last'}
-    </PagerButton>
-  )
-}
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withHandlers(handlers),
+  withProps(mapExtraProps)
+)
 
-const buildNumberPageButton = n =>
-  <PagerButton loading={n.loading} key={n.page} page={n.page} currentPage={n.currentPage} changePage={n.changePage}>
-    {n.page + 1}
-  </PagerButton>
-
-const Pager = ({changePage, filter, count, loadingCount, loadingData, numberedPageButtons}) => {
-  const currentPage = filter.page
-  const totalPages = pagerLogic.determineTotalPages(filter.pageSize, count)
-  if (!loadingCount && count < 1) return null
-  return (
-    <div className='manifest-pager btn-group' role='group' aria-label='pager'>
-      <FirstButton loading={loadingData} changePage={changePage} currentPage={currentPage} />
-      <PreviousButton loading={loadingData} changePage={changePage} currentPage={currentPage} />
-      {numberedPageButtons.map(buildNumberPageButton)}
-      <NextButton loading={loadingData} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
-      <LastButton loadingCount={loadingCount} loadingData={loadingData} changePage={changePage} currentPage={currentPage} totalPages={totalPages} />
-    </div>
-  )
-}
-
-Pager.propTypes = {
-  name: PropTypes.string.isRequired,
-  loadingCount: PropTypes.bool.isRequired,
-  loadingData: PropTypes.bool.isRequired,
-  changePage: PropTypes.func.isRequired,
-  filter: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired,
-  numberedPageButtons: PropTypes.array.isRequired
-}
-
-export default Pager
+export default enhance(Pager)
