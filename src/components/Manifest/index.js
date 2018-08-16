@@ -1,29 +1,61 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Rows from '../../containers/Rows'
-import Headers from '../../containers/Headers'
-import Controls from '../Controls'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { compose, lifecycle } from 'recompose'
+import isEqual from 'lodash/isEqual'
 
-const Manifest = ({name, definition, loading, error, onRowClick}) =>
-  <div className={'manifest table' + (loading ? ' loading' : '') + (error ? ' manifest-error' : '')}>
-    <table>
-      <Headers name={name} definition={definition} />
-      <Rows name={name} definition={definition} onRowClick={onRowClick} />
-    </table>
-    <Controls name={name} />
-  </div>
+import * as actions from '../../actions'
+import Manifest from './component'
+import stateByName from '../../util/stateByName'
 
-Manifest.propTypes = {
-  name: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.string.isRequired,
-  definition: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string
-    }).isRequired
-  ),
-  onRowClick: PropTypes.func
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    data: namedState.data,
+    error: namedState.error,
+    loading: namedState.loadingData,
+    providedFilter: props.filter,
+    filter: namedState.filter,
+    inMemoryData: props.data
+  }
 }
 
-export default Manifest
+const mapDispatchToProps = dispatch => bindActionCreators({
+  refreshData: actions.refreshData,
+  refreshCount: actions.refreshCount,
+  setInMemoryData: actions.setInMemoryData,
+  destroy: actions.destroy
+}, dispatch)
+
+const propsVerification = props => {
+  if (!props.definition) throw new Error('Manifest definition must be provided!')
+  if (!props.name) throw new Error('Manifest name must be provided!')
+}
+
+const countNeeded = filter => filter && !filter.page
+const lifecycleMethods = {
+  componentWillMount () {
+    propsVerification(this.props)
+    if (this.props.inMemoryData) {
+      this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
+    } else if (this.props.autoLoad !== false) {
+      if (countNeeded(this.props.filter)) {
+        this.props.refreshCount(this.props.name, this.props.filter)
+      }
+      this.props.refreshData(this.props.name, this.props.filter)
+    }
+  },
+  componentWillUnmount () {
+    this.props.destroy(this.props.name)
+  },
+  componentDidUpdate (prevProps, prevState, prevContext) {
+    if (isEqual(this.props.filter, prevProps.filter)) return
+    this.props.refreshData(this.props.name, this.props.filter)
+  }
+}
+
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  lifecycle(lifecycleMethods)
+)
+
+export default enhance(Manifest)

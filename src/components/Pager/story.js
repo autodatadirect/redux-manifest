@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Pager from './index'
+import Pager from './component'
 import { withKnobs, text, number, boolean, object } from '@storybook/addon-knobs/react'
 import { action } from '@storybook/addon-actions'
 import { buildArrayOfNumberedPagerButtons } from './pagerLogic'

@@ -1,22 +1,26 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Row from '../../containers/Row'
+import { connect } from 'react-redux'
 
-const mapRow = row => <Row key={row.data.id} id={row.data.id} name={row.name} definition={row.definition} data={row.data} onRowClick={row.onRowClick} />
+import Rows from './component'
+import stateByName from '../../util/stateByName'
 
-const Rows = ({rows, onRowClick}) => {
-  return (
-    <tbody>
-      {rows.map(mapRow)}
-    </tbody>
-  )
+const buildArrayOfRowData = (data, props) => {
+  const rows = []
+  for (let i = 0; i < data.length; i++) {
+    rows.push({
+      data: data[i],
+      name: props.name,
+      definition: props.definition,
+      onRowClick: props.onRowClick
+    })
+  }
+  return rows
 }
 
-Rows.propTypes = {
-  rows: PropTypes.arrayOf(
-    PropTypes.object
-  ).isRequired,
-  onRowClick: PropTypes.func
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    rows: buildArrayOfRowData(namedState.data, props)
+  }
 }
 
-export default Rows
+export default connect(mapStateToProps)(Rows)

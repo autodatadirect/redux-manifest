@@ -1,6 +1,6 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import Row from './index'
+import Row from './component'
 import { withKnobs, boolean, object } from '@storybook/addon-knobs/react'
 import { action } from '@storybook/addon-actions'
 import { withRedux } from '../../../.storybook/decorators'

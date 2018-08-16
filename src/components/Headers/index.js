@@ -1,53 +1,45 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import SimpleHeader from '../SimpleHeader'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { compose, withHandlers } from 'recompose'
 
-const reduceSort = id => (chosen, current) => chosen || current.id === id ? current : null
+import * as actions from '../../actions'
+import Headers from './component'
+import stateByName from '../../util/stateByName'
 
-const getSort = (id, sorts) => sorts.reduce(reduceSort(id), null)
-
-const sortIsAsc = sort => sort && sort.isAsc
-
-const mapHeader = (sorts, updateSort, loading) => def => {
-  const headerProps = {
-    id: def.id,
-    loading: loading,
-    label: def.label || def.id,
-    sortable: def.sortable || false,
-    updateSort: (loading || !def.sortable) ? () => null : updateSort,
-    sortAsc: sortIsAsc(getSort(def.id, sorts))
+const mapStateToProps = (state, props) => {
+  const namedState = stateByName(state, props.name)
+  return {
+    sorts: namedState.filter.sorts,
+    filter: namedState.filter,
+    loading: namedState.loadingCount || namedState.loadingData
   }
-  if (def.headerComponent) return <def.headerComponent {...headerProps} />
-  return <SimpleHeader key={headerProps.id} {...headerProps} />
 }
 
-const Headers = ({definition, sorts, updateSort, loading}) => {
-  return (
-    <thead>
-      <tr>
-        {definition.map(mapHeader(sorts, updateSort, loading))}
-      </tr>
-    </thead>
-  )
+const mapDispatchToProps = dispatch => bindActionCreators({
+  refreshData: actions.refreshData,
+  refreshCount: actions.refreshCount
+}, dispatch)
+
+const hasClass = (className, classString) => classString.match(className) !== null
+
+const updateFilterSort = (id, isAsc, sorts) => [{id, isAsc}]
+
+const countNeeded = filter => filter && !filter.page
+const handlers = {
+  updateSort: props => event => {
+    const isAsc = !hasClass('sorted-asc', event.target.className)
+    const id = event.target.getAttribute('data-id')
+    const updatedFilter = {...props.filter, sorts: updateFilterSort(id, isAsc, props.filter.sorts)}
+    if (countNeeded(updatedFilter)) {
+      props.refreshCount(props.name, updatedFilter)
+    }
+    props.refreshData(props.name, updatedFilter)
+  }
 }
 
-Headers.propTypes = {
-  name: PropTypes.string.isRequired,
-  loading: PropTypes.bool.isRequired,
-  updateSort: PropTypes.func.isRequired,
-  sorts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      isAsc: PropTypes.bool.isRequired
-    })
-  ).isRequired,
-  definition: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string,
-      sortable: PropTypes.Boolean
-    }).isRequired
-  )
-}
+const enhance = compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withHandlers(handlers)
+)
 
-export default Headers
+export default enhance(Headers)
