@@ -11,7 +11,7 @@
   "author": "Auto Data Direct, Inc.",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
@@ -19,12 +19,13 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.9",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.9.3",
     "sass-loader": "^6.0.6",
     "scss-loader": "0.0.1",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.0"
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
