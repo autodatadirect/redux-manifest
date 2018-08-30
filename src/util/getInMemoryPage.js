@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash/cloneDeep'
+
 const sorter = id => (a, b) => {
   var nameA = a[id]
   var nameB = b[id]
@@ -34,9 +36,10 @@ const sortData = (data, sorts) => {
 }
 
 export default (data, filter) => {
-  sortData(data, filter.sorts)
+  const newData = cloneDeep(data)
+  sortData(newData, filter.sorts)
   return {
-    data: fetchPage(data, filter),
-    count: data.length
+    data: fetchPage(newData, filter),
+    count: newData.length
   }
 }

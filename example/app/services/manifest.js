@@ -59,11 +59,20 @@ const sortData = sorts => {
   }
 }
 
-const compileResult = filter => {
+export const compileResult = filter => {
   if (!data) buildData()
   sortData(filter.sorts)
   return {
     data: fetchPage(filter),
+    count
+  }
+}
+
+export const compileInMemoryResult = filter => {
+  if (!data) buildData()
+  sortData(filter.sorts)
+  return {
+    data,
     count
   }
 }

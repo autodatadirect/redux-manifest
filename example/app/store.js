@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import { default as sagaMiddleware } from './middleware'
+import invariant from 'redux-immutable-state-invariant'
 import reducer from './reducers'
 
 const logger = createLogger({
@@ -11,7 +12,7 @@ const logger = createLogger({
 const configureStore = () => {
   const store = createStore(
     reducer,
-    applyMiddleware(sagaMiddleware, logger)
+    applyMiddleware(sagaMiddleware, logger, invariant())
   )
 
   window.store = store
