@@ -19,6 +19,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.9",
+    "redux-immutable-state-invariant": "^2.1.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^6.0.6",
     "scss-loader": "0.0.1",
