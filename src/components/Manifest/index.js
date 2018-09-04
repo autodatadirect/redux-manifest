@@ -15,6 +15,7 @@ const mapStateToProps = (state, props) => {
     loading: namedState.loadingData,
     providedFilter: props.filter,
     filter: namedState.filter,
+    inMemoryDataHasChanged: namedState.inMemoryData !== props.data,
     inMemoryData: props.data
   }
 }
@@ -35,7 +36,7 @@ const countNeeded = filter => filter && !filter.page
 const lifecycleMethods = {
   componentWillMount () {
     propsVerification(this.props)
-    if (this.props.inMemoryData) {
+    if (this.props.inMemoryData && this.props.inMemoryData.length) {
       this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
     } else if (this.props.autoLoad !== false) {
       if (countNeeded(this.props.filter)) {
@@ -48,6 +49,9 @@ const lifecycleMethods = {
     this.props.destroy(this.props.name)
   },
   componentDidUpdate (prevProps, prevState, prevContext) {
+    if (this.props.inMemoryData && this.prop.inMemoryData.length && this.props.inMemoryDataHasChanged) {
+      this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
+    }
     if (isEqual(this.props.filter, prevProps.filter)) return
     this.props.refreshData(this.props.name, this.props.filter)
   }
