@@ -3,6 +3,7 @@ import getInMemoryPage from './util/getInMemoryPage'
 
 export const initialState = {
   count: 0,
+  inMemoryData: [],
   data: [],
   loadingCount: true,
   loadingData: true,
