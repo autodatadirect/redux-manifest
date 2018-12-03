@@ -20,4 +20,10 @@ describe('getInMemoryPage', () => {
       data: [{n: 'B'}]
     })
   })
+  it('throws Error when filterFn returns non array', () => {
+    const data = [{n: 'c'}, {n: 'B'}, {n: 'a'}]
+    const filter = {sorts: [{id: 'n', isAsc: true}], search: 'B'}
+    const filterFn = (data, filter) => 'abc'
+    expect(() => getInMemoryPage(data, filter, filterFn)).toThrow('filterFn returned non-array')
+  })
 })
