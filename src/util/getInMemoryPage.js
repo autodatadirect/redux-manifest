@@ -33,9 +33,12 @@ const sortData = (data, sorts) => {
   }
 }
 
-export default (data, filter) => {
-  const clonedData = [...data]
+export default (data, filter, filterFn) => {
+  let clonedData = [...data]
   sortData(clonedData, filter.sorts)
+  if (filterFn) {
+    clonedData = filterFn(clonedData, filter.search)
+  }
   return {
     data: fetchPage(clonedData, filter),
     count: clonedData.length
