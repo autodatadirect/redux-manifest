@@ -1,3 +1,5 @@
+import isArray from 'lodash/isArray'
+
 const sorter = id => (a, b) => {
   var nameA = a[id]
   var nameB = b[id]
@@ -37,7 +39,10 @@ export default (data, filter, filterFn) => {
   let clonedData = [...data]
   sortData(clonedData, filter.sorts)
   if (filterFn) {
-    clonedData = filterFn(clonedData, filter.search)
+    clonedData = filterFn(clonedData, filter)
+    if (!isArray(clonedData)) {
+      throw new Error('filterFn returned non-array')
+    }
   }
   return {
     data: fetchPage(clonedData, filter),
