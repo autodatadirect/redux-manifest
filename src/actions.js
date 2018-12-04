@@ -1,5 +1,5 @@
-import isArray from 'lodash/isArray'
 import * as types from './constants/actionTypes'
+import isArray from 'lodash/isArray'
 
 const err = message => new Error('Redux Manifest Action: ' + message)
 
