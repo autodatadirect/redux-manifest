@@ -93,6 +93,7 @@ The `Manifest` component is the primary component for using
 | _definition_ | * | array | an array of objects which define the layout and appearance of the manifest |
 | _autoLoad_ |  | boolean | instructs the manifest to request data on mount, defaults to `true` |
 | _data_ |  | array | an array of entry objects that represent the complete dataset for this manifest, using this prop creates an in memory manifest so that responding to the `REFRESH_DATA` and `REFRESH_COUNT` actions is no longer required |
+| _filterFn_ |  | function | a function used by in-memory tables to filter the data, not including `sorts` |
 
 
 ## Manifest Definition
