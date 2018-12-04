@@ -5,17 +5,19 @@ import definition from './manifest.def'
 import { withState, withHandlers, compose } from 'recompose'
 // import { compileInMemoryResult } from '../../services/manifest'
 
-const onRowClick = (row) => console.log('You clicked the following row: ', row)
+const onRowClick = row => console.log('You clicked the following row: ', row)
 
 const MountUnMountButton = ({toggleVisible}) =>
   <button onClick={toggleVisible}>Click to mount/unmount</button>
+
+// const filterFn = (data, filter) => data.filter(datum => datum.age > 30)
 
 const filter = {search: 'test', id: 123}
 const ManifestWrapper = ({toggleVisible, visible}) => {
   if (!visible) return <MountUnMountButton toggleVisible={toggleVisible} />
   return (
     <div>
-      {/* <Manifest name='testManifest' definition={definition} data={compileInMemoryResult(filter).data} onRowClick={onRowClick} filter={filter} /> */}
+      {/* <Manifest name='testManifestMem' definition={definition} data={compileInMemoryResult(filter).data} onRowClick={onRowClick} filter={filter} filterFn={filterFn} /> */}
       <Manifest name='testManifest' definition={definition} onRowClick={onRowClick} filter={filter} />
       <MountUnMountButton toggleVisible={toggleVisible} />
     </div>
