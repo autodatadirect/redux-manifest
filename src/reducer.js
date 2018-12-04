@@ -1,5 +1,6 @@
 import * as types from './constants/actionTypes'
 import getInMemoryPage from './util/getInMemoryPage'
+import * as filterFunctions from './util/filterFnRegistry'
 
 export const initialState = {
   count: 0,
@@ -33,7 +34,7 @@ const reduceSetError = (state, action) => ({
 const reduceRefreshData = (s, a) => s.inMemoryData ? inMemoryReduceRefreshData(s, a) : remoteReduceRefreshData(s, a)
 
 const inMemoryReduceRefreshData = (state, action) => {
-  const page = getInMemoryPage(state.inMemoryData, action.filter || initialState.filter)
+  const page = getInMemoryPage(state.inMemoryData, action.filter || initialState.filter, filterFunctions.get(action.manifestName))
   return {
     ...state,
     loadingCount: false,
