@@ -33,31 +33,54 @@ const propsVerification = props => {
   if (!props.name) throw new Error('Manifest name must be provided!')
 }
 
-const countNeeded = filter => filter && !filter.page
+const isFirstPage = filter => filter && filter.page === 0
+
+const isInMemory = ({ inMemoryData }) => inMemoryData && inMemoryData.length
+
+const initializeInMemoryManifest = ({ filterFn, name, inMemoryData, filter, inMemoryDataHasChanged, setInMemoryData }, prevProps) => {
+  if (!prevProps || filterFn !== prevProps.filterFn) {
+    filterFunctions.register(name, filterFn)
+  }
+  if (!prevProps || inMemoryDataHasChanged) {
+    setInMemoryData(name, inMemoryData, filter)
+  }
+}
+
+const initializeManifest = ({ name, filter, autoLoad, refreshCount, refreshData }, prevProps) => {
+  if (prevProps || autoLoad === false) return
+  if (isFirstPage(filter)) {
+    refreshCount(name, filter)
+  }
+  refreshData(name, filter)
+}
+
+const handleFilterChange = ({ name, filter, refreshData }, prevProps) => {
+  if (!prevProps || isEqual(filter, prevProps.filter)) return
+  refreshData(name, filter)
+}
+
+const handlePropChanges = (props, prevProps) => {
+  propsVerification(props)
+
+  if (isInMemory(props)) {
+    initializeInMemoryManifest(props, prevProps)
+  } else {
+    initializeManifest(props, prevProps)
+  }
+  handleFilterChange(props, prevProps)
+}
+
 const lifecycleMethods = {
   componentWillMount () {
-    propsVerification(this.props)
-    if (this.props.inMemoryData && this.props.inMemoryData.length) {
-      this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
-      filterFunctions.register(this.props.name, this.props.filterFn)
-    } else if (this.props.autoLoad !== false) {
-      if (countNeeded(this.props.filter)) {
-        this.props.refreshCount(this.props.name, this.props.filter)
-      }
-      this.props.refreshData(this.props.name, this.props.filter)
-    }
+    handlePropChanges(this.props)
   },
   componentWillUnmount () {
-    filterFunctions.deregister(this.props.name, this.props.filterFn)
-    this.props.destroy(this.props.name)
+    const { name, filterFn, destroy } = this.props
+    filterFunctions.deregister(name, filterFn)
+    destroy(name)
   },
-  componentDidUpdate (prevProps, prevState, prevContext) {
-    if (this.props.inMemoryData && this.prop.inMemoryData.length && this.props.inMemoryDataHasChanged) {
-      this.props.setInMemoryData(this.props.name, this.props.inMemoryData)
-      filterFunctions.register(this.props.name, this.props.filterFn)
-    }
-    if (isEqual(this.props.filter, prevProps.filter)) return
-    this.props.refreshData(this.props.name, this.props.filter)
+  componentDidUpdate (prevProps) {
+    handlePropChanges(this.props, prevProps)
   }
 }
 

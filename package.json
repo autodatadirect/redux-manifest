@@ -28,7 +28,9 @@
     "recompose": "^0.26.0"
   },
   "standard": {
-    "env": [ "mocha" ]
+    "env": [
+      "mocha"
+    ]
   },
   "devDependencies": {
     "@storybook/addon-knobs": "^3.3.15",
