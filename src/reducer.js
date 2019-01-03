@@ -4,6 +4,7 @@ import * as filterFunctions from './util/filterFnRegistry'
 
 export const initialState = {
   count: 0,
+  isInMemory: false,
   inMemoryData: [],
   data: [],
   loadingCount: true,
@@ -31,7 +32,7 @@ const reduceSetError = (state, action) => ({
   error: action.message
 })
 
-const reduceRefreshData = (s, a, isInMemory) => isInMemory ? inMemoryReduceRefreshData(s, a) : remoteReduceRefreshData(s, a)
+const reduceRefreshData = (s, a) => s.isInMemory ? inMemoryReduceRefreshData(s, a) : remoteReduceRefreshData(s, a)
 
 const inMemoryReduceRefreshData = (state, action) => {
   const page = getInMemoryPage(state.inMemoryData, action.filter || initialState.filter, filterFunctions.get(action.manifestName))
@@ -73,8 +74,9 @@ const reduceSetData = (state, action) => ({
 
 const reduceSetInMemoryData = (state, action) => reduceRefreshData({
   ...state,
+  isInMemory: true,
   inMemoryData: action.data
-}, action, true)
+}, action)
 
 const reduceFocusRow = (state, action) => ({
   ...state,
