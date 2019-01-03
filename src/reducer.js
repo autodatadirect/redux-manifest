@@ -4,8 +4,8 @@ import * as filterFunctions from './util/filterFnRegistry'
 
 export const initialState = {
   count: 0,
-  inMemoryData: [],
   isInMemory: false,
+  inMemoryData: [],
   data: [],
   loadingCount: true,
   loadingData: true,
@@ -74,6 +74,7 @@ const reduceSetData = (state, action) => ({
 
 const reduceSetInMemoryData = (state, action) => reduceRefreshData({
   ...state,
+  isInMemory: true,
   inMemoryData: action.data
 }, action)
 
@@ -111,7 +112,6 @@ export default (state = {}, action) => {
     case types.SET_IN_MEMORY_DATA:
       return {
         ...state,
-        isInMemory: true,
         [action.manifestName]: reducer(state[action.manifestName], action)
       }
     case types.DESTROY:
