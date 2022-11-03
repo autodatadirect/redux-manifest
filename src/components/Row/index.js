@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { compose, withHandlers } from 'recompose'
+import { compose, withHandlers } from 'react-recompose'
 
 import Row from './component'
 import * as actions from '../../actions'
