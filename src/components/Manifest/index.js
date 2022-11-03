@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { compose, lifecycle } from 'recompose'
+import { compose, lifecycle } from 'react-recompose'
 import isEqual from 'lodash/isEqual'
 
 import * as actions from '../../actions'

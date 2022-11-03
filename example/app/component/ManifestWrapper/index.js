@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Manifest } from 'redux-manifest'
 import definition from './manifest.def'
-import { withState, withHandlers, compose } from 'recompose'
+import { withState, withHandlers, compose } from 'react-recompose'
 // import { compileInMemoryResult } from '../../services/manifest'
 
 const onRowClick = row => console.log('You clicked the following row: ', row)

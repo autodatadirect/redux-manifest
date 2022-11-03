@@ -1,6 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { compose, withHandlers, withProps } from 'recompose'
+import { compose, withHandlers, withProps } from 'react-recompose'
 import * as pagerLogic from './pagerLogic'
 
 import Pager from './component'
