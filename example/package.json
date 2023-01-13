@@ -25,7 +25,7 @@
     "scss-loader": "0.0.1",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",
-    "webpack-cli": "^3.1.0",
+    "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
